@@ -1,0 +1,5 @@
+{
+    "board": "arduino:avr:uno",
+    "programmer": "arduino:arduinoisporg",
+    "sketch": "sketch_sep19a\\sketch_sep19a.ino"
+}
