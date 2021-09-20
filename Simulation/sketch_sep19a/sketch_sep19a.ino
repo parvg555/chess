@@ -12,6 +12,31 @@ int directiony_multiplier = 1;  // set this -1 for counter rotation
 
 int StepSize = 200;             //number of steps for one box
 
+int x = 0;                      // saves the current position on x axis
+int y = 0;						// saves the current position on y axis
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+int board[17][19] = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+
+
 //////////////////////////////////////////////////////////////////////////////////////
 
 void setup() {
@@ -92,48 +117,57 @@ void RotateBothMotors(int motor1, int motor2, int steps, int dir1, int dir2){
 // this function is to move foward/up
 void u(int steps){
 	rotate(motory,steps*StepSize, 1*directiony_multiplier);
+	y = y + steps;
 }
  
 // this function is to move backward/down
 void d(int steps){
 	rotate(motory,steps*StepSize, -1*directiony_multiplier);
+	y = y - steps;
 }
 
 // this function is to move in right direction
 void r(int steps){
 	rotate(motorx, steps*StepSize, 1*directionx_multiplier);
+	x = x + steps;
 }
 
 // this function is to move in left direction
 void l(int steps){
 	rotate(motorx,steps*StepSize, -1*directionx_multiplier);
+	x = x - steps;
 }
 
 // this function is to move in upper right direction
 void ur(int steps){
 	RotateBothMotors(motorx,motory,steps*StepSize,1*directionx_multiplier, 1*directiony_multiplier);
+	x = x + steps;
+	y = y + steps;
 }
 
 // this function is to move in down right direction
 void dr(int steps){
 	RotateBothMotors(motorx,motory,steps*StepSize,1*directionx_multiplier, -1*directiony_multiplier);
+	x = x + steps;
+	y = y - steps;
 }
 
 // this function is to move in down left direction
 void dl(int steps){
 	RotateBothMotors(motorx,motory,steps*StepSize,-1*directionx_multiplier,-1*directiony_multiplier);
+	x = x - steps;
+	y = y - steps;
+
 }
 
 // this function is to move in upper left direction
 void ul(int steps){
 	RotateBothMotors(motorx,motory,steps*StepSize,-1*directionx_multiplier,1*directiony_multiplier);
+	x = x - steps;
+	y = y + steps;
 }
 
 void loop(){
-    //rotate(1,200,1); // motor - 1  steps - 200 direction - clockwise
-    //rotate(2,200,1);
-    //rotate(1,200,2);
-    //rotate(2,200,2);
 	u(1);
 	delay(1000);
 	ur(1);
