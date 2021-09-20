@@ -17,7 +17,23 @@ int y = 0;						// saves the current position on y axis
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-                /*	  0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18   */
+/* 
+	THESE ARE THE RULES DEFINING THE NOMENCLATURE OF EACH PIECE 
+	
+	1.	Unit places of the number defines the color of the piece
+		1  -----> White
+		2  -----> Black 
+
+	2. Tenth places of the number defines the type of the piece
+		1  -----> Pawn
+		2  -----> Knight
+		3  -----> Bishop
+		4  -----> Rook
+		5  -----> Queen
+		6  -----> King
+
+*/
+                //	  0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18   
 int board[17][19] = {{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0},   // 0
 					 {0 ,0 ,41,0 ,21,0 ,31,0 ,61,0 ,51,0 ,31,0 ,21,0 ,41,0 ,0},   // 1
 					 {0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0},   // 2
