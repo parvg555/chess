@@ -44,7 +44,7 @@ void rotate(int motor,int steps,int dxn){
       digitalWrite(stepPin,HIGH);
       delayMicroseconds(10);
       digitalWrite(stepPin,LOW);
-      delayMicroseconds(1290);
+      delayMicroseconds(2000);
     }
     delay(1000);
 }
@@ -135,21 +135,33 @@ void loop(){
     //rotate(1,200,2);
     //rotate(2,200,2);
 	u(1);
-	delay(1000);
+	
+	
+	// 1miliseconds = 1000 microseconds
+	delayMicroseconds(1000000); 	
+// 	delay(1000);
 	ur(1);
-	delay(1000);
+	delayMicroseconds(1000000); 	
+// 	delay(1000);
 	r(1);
-  	delay(1000);
-  	dr(1);
-  	delay(1000);
-  	d(1);
-  	delay(1000);
-  	dl(1);
-  	delay(1000);
-  	l(1);
-  	delay(1000);
-  	ul(1);
-  	delay(1000);
-  	u(1);
-  	delay(1000);
-}
+  	delayMicroseconds(1000000); 	
+// 	delay(1000);
+	dr(1);
+  	delayMicroseconds(1000000); 	
+// 	delay(1000);
+	d(1);
+  	delayMicroseconds(1000000); 	
+// 	delay(1000);
+	dl(1);
+  	delayMicroseconds(1000000); 	
+// 	delay(1000);
+	l(1);
+  	delayMicroseconds(1000000); 	
+// 	delay(1000);
+	ul(1);
+  	delayMicroseconds(1000000); 	
+// 	delay(1000);
+	u(1);
+  	delayMicroseconds(1000000); 	
+// 	delay(1000);
+	}
