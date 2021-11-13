@@ -62,6 +62,6 @@ void loop(){
     }
 
     Serial.println();
-    Serial.println("closing cinnection");
+    Serial.println("closing connection");
     delay(3000);
 }

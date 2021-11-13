@@ -17,6 +17,7 @@
             "includePath": [
                 "C:\\Users\\parvg\\Desktop\\SimulIDE_0.4.15-SR7_Win64\\arduino\\hardware\\arduino\\avr\\cores\\arduino",
                 "C:\\Users\\parvg\\Desktop\\SimulIDE_0.4.15-SR7_Win64\\arduino\\hardware\\arduino\\avr\\variants\\standard",
+                "C:\\Users\\parvg\\Documents\\Arduino\\libraries\\Vector-master\\src",
                 "c:\\users\\parvg\\desktop\\simulide_0.4.15-sr7_win64\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\7.3.0\\include",
                 "c:\\users\\parvg\\desktop\\simulide_0.4.15-sr7_win64\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\7.3.0\\include-fixed",
                 "c:\\users\\parvg\\desktop\\simulide_0.4.15-sr7_win64\\arduino\\hardware\\tools\\avr\\avr\\include"
