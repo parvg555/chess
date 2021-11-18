@@ -92,6 +92,29 @@ void RegisterMove(String command){
     }
 }
 
+void move(int start_x, int start_y,  int end_x, int end_y){
+
+    if(start_x == end_x && start_y == end_y){
+        delay(100);
+    }
+    // if one has to move up (same line)
+    else if(start_x != end_x && end_x>start_x && start_y == end_y){}
+    // if one has to move down (same line)
+    else if(start_x != end_x && end_x<start_x && start_y == end_y){}
+    // if one has to move right (same line)
+    else if(start_y != end_y && end_y>start_y && start_x == end_x){}
+    // if one has to move left (same line)
+    else if(start_y != end_y && end_y<start_y && start_x == end_x){}
+    // first quadrant 
+    else if(start_x < end_x && start_y < end_y){}
+    // second quadrant
+    else if()
+    // third quadrant
+    // fourth quadrant
+
+
+}
+
 void setup(){
     reset();
     Serial.begin(115200); 
