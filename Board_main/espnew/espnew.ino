@@ -74,9 +74,10 @@ int CheckConnection(){
 void loop(){
     
     if(CheckConnection() == 1){
-      Serial.println(String("online"));
+      Serial.println(String("Status: Online"));
     }else{
-      Serial.println(String("offline")); 
+      Serial.println(String("Status: Offline")); 
     }
+    
     delay(500);
 }
