@@ -214,6 +214,13 @@
     font-size: 14px;
 }
 
+
+.login__create-container--info-text-notification {
+    margin-top: 15px;
+    color: black;
+    font-size: 14px;
+}
+
 .login__create-container__form-container{
     margin-top: 3%;
     display: flex;
@@ -245,7 +252,6 @@
     margin-left: 10px;
     outline-width: 0;
     width: 100%;
-    height: 100%;
 }
 
 .login__create-container__form-container__form__input > .MuiSvgIcon-root {

@@ -1,14 +1,18 @@
 import React,{useRef,useState,useEffect} from 'react'
-import './css/Login.css'
-import FacebookLogo from '../assets/logo/facebook.svg'
-import GoogleLogo from '../assets/logo/google.svg'
-import LindedinLogo from '../assets/logo/linkedin.svg'
+import './css/Login.css';
+import FacebookLogo from '../assets/logo/facebook.svg';
+import GoogleLogo from '../assets/logo/google.svg';
+import LindedinLogo from '../assets/logo/linkedin.svg';
 import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
 import Chess from 'chess.js';
+import axios from '../axios.js';
+import  { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
+import { cancelable } from "cancelable-promise";
 
 import { Chessboard } from 'react-chessboard';
 
@@ -19,7 +23,36 @@ function Login({logo}) {
     const [game, setGame] = useState(new Chess());
     const [latestTimeout, setLatestTimeout] = useState();
 
+    const [loginMessage,setloginMessage] = useState("");
+    const [signupMessage,setsignupMessage] = useState("");
 
+    const navigate = useNavigate();
+
+    const [loginForm, setloginForm] = useState({
+        username: "",
+        password: ""
+    })
+
+    const [signupForm, setsignupForm] = useState({
+        username: "",
+        email: "",
+        password: ""
+    })
+
+
+    useEffect(() => {
+        let isMounted = true;
+        const token = Cookies.get('token')
+        const redirect = (token) => {
+            if(token && isMounted){
+                navigate('/game');
+            }
+        }
+        redirect(token);
+        return () => {
+            isMounted = false;
+        }
+    },[]);
 
     function safeGameMutate(modify) {
         setGame((g) => {
@@ -29,12 +62,58 @@ function Login({logo}) {
         });
     }
 
+    const createNewUser = async (e) => {
+        e.preventDefault();
+        if(!available){
+            setsignupForm("Username Already Taken");
+        }else{
+            const {data} = await axios.post("/register",{
+                username:signupForm.username,
+                email:signupForm.email,
+                password:signupForm.password
+            })
+            if(data.success) {
+                setloginMessage("Account Created! Please login");
+                setloginForm(prevState => ({
+                    ...prevState,
+                    username:data.username
+                }))
+                setsignupForm({
+                    username: "",
+                    email: "",
+                    password: ""
+                })
+                setAvailable(false);
+                setsignupMessage("");
+                setLogin(true);
+            }else{
+                setsignupMessage(data.message);
+            }
+        }
+    }
+
+    const Login = async (e) => {
+        e.preventDefault();
+        const {data} = await axios.post("/login",{
+            username:loginForm.username,
+            password:loginForm.password
+        })
+        if(data.success){
+            console.log(data.token);
+            Cookies.set('token',data.token,{expires:30});
+            navigate('/game');
+        }else{
+            setloginMessage(data.message)
+        }
+    }
+    
+
     useEffect(() => {
         setTimeout(makeRandomMove, 3000);
         return () => {
           clearTimeout(latestTimeout);
         };
-    }, []);
+    } ,[]);
 
     const resetGame = () => {
         clearTimeout(latestTimeout);
@@ -100,34 +179,79 @@ function Login({logo}) {
 
             <div className={`login__create-container ${!login?'login__create-container--active':'login__create-container--inactive'}`}>
             Create Account
-                <div className='login__create-container__social-container' >
+
+                {/* uncomment this section to enable social signup */}
+
+                {/* <div className='login__create-container__social-container' >
                     <img className='login__create-container__social-container--facebook' src={FacebookLogo} alt="Facebook Logo" />
                     <img
                     className='login__create-container__social-container--google' 
                     src={GoogleLogo} alt="Google Logo" />
                     <img className='login__create-container__social-container--linkedin' src={LindedinLogo} alt="LinkedIn Logo" />
-                </div>
+                </div> */}
                 <span className="login__create-container--info-text">or use email for your registration</span>
                 <div className='login__create-container__form-container'>
-                    <form className='login__create-container__form-container__form'>
+                    <form className='login__create-container__form-container__form' onSubmit={(e) => {
+                        e.preventDefault();
+                    }}>
 
                         <div className='login__create-container__form-container__form__input'>
                             <PersonIcon/>
-                            <input type="text" placeholder='Username' />
-                            {available?(<DoneIcon style={{color:'green'}}/>):(<ClearIcon style={{color:'red'}}/>)}
+                            <input value={signupForm.username}
+                                    onChange={async (e) => {
+                                        const value = e.target.value;
+                                        setsignupForm(prevState => ({
+                                            ...prevState,
+                                            username:value
+                                        }));
+                                        const response = await axios.post("/validUsername",{
+                                            "username":value
+                                        })
+                                        if (response.data.valid) setAvailable(true);
+                                        else setAvailable(false);
+                                    }}
+                                    type="text" 
+                                    placeholder='Username' 
+                            />
+                            {signupForm.username!==''?(
+                                available?(<DoneIcon style={{color:'green'}}/>):(<ClearIcon style={{color:'red'}}/>)
+                                ):("")
+                            }
                             
                         </div>
 
                         <div className='login__create-container__form-container__form__input'>
                             <EmailIcon/>
-                            <input type="email" placeholder='Email' />
+                            <input value={signupForm.email} 
+                                    type="email" 
+                                    placeholder='Email' 
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setsignupForm(prevState => ({
+                                            ...prevState,
+                                            email:value
+                                        }));
+                                    }}
+                            />
                         </div>
 
                         <div className='login__create-container__form-container__form__input'>
                             <LockIcon/>
-                            <input type="Password" placeholder='Password' />
+                            <input value={signupForm.password} 
+                                    type="Password" 
+                                    placeholder='Password' 
+                                    onChange = {(e) => {
+                                        const value = e.target.value;
+                                        setsignupForm(prevState => ({
+                                            ...prevState,
+                                            password:value
+                                        }))
+                                    }}
+                            />
                         </div>
+                        <span className="login__create-container--info-text-notification">{signupMessage}</span>
                         <button
+                                onClick={createNewUser}
                                 className="login__create-container__form-container__form--submit">
                                 Sign Up
                         </button>
@@ -146,7 +270,7 @@ function Login({logo}) {
             <div className={`login__login-container ${login ? 'login__login-container--active' : 'login__login-container--inactive'}`}>
                         <div className="long__login-container__chess_container">
                         <Chessboard
-                            animationDuration ={3000}
+                            animationDuration ={2000}
                             id="RandomVsRandom"
                             arePiecesDraggable={false}
                             position={game.fen()}
@@ -164,18 +288,43 @@ function Login({logo}) {
             <div className={`login__hello-container ${login ? 'login__hello-container--active' : 'login__hello-container--inactive'}`}>
           
                 <img src={logo} alt="TouchMeNot" className='login__hello-container--image'/>
-                            <form className='login__hello-container__form'>
+                            <form className='login__hello-container__form' onSubmit={(e) => {
+                                e.preventDefault();
+                            }}>
                                 <div className='login__hello-container__form__input'>
                                     <PersonIcon/>
-                                    <input type="text" placeholder='Username'/>
+                                    <input
+                                        value={loginForm.username}
+                                        onChange={(e) => {
+                                            const value = e.target.value;
+                                            setloginForm(prevState => ({
+                                                ...prevState,
+                                                username:value
+                                            }))
+                                        }}
+                                        type="text" 
+                                        placeholder='Username'
+                                    />
                                 </div>
                                 <div
                                 className='login__hello-container__form__input'>
                                     <LockIcon/>
-                                    <input type="password" 
-                                    placeholder='Password'/>
+                                    <input 
+                                        value={loginForm.password}
+                                        onChange={(e) => {
+                                            const value = e.target.value;
+                                            setloginForm(prevState => ({
+                                                ...prevState,
+                                                password:value
+                                            }))
+                                        }}
+                                        type="password" 
+                                        placeholder='Password'
+                                    />
                                 </div>
-                                <button className='login__hello-container__button'> Log In</button>
+                                <span>{loginMessage}</span>
+                                <button className='login__hello-container__button'
+                                onClick={Login}> Log In</button>
                             </form>
                         
                         <div onClick={() => setLogin(!login)} className="login__hello-container__button">
