@@ -17,6 +17,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import { Avatar, IconButton } from "@mui/material";
 import MicSharpIcon from '@mui/icons-material/MicSharp';
+import ComputerIcon from '@mui/icons-material/Computer';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 function Game({logo}) {
     const navigate = useNavigate();
@@ -144,14 +146,16 @@ function Game({logo}) {
                     {/* Options */}
                     <div className="options">
                         <div className="button">
-                            Quit Game
+                            Play Online
                         </div>
                         <div className='half-button-container'>
                             <div className="button-half">
-                                <MicSharpIcon fontSize='large' />
+                                {/* <MicSharpIcon fontSize='large' /> */}
+                                <ComputerIcon fontSize='large' />
                             </div>
                             <div className="button-half right">
-                                <LightbulbIcon fontSize='large' />
+                                {/* <LightbulbIcon fontSize='large' /> */}
+                                <PersonAddIcon fontSize='large' />
                             </div>
                         </div>
                     </div>
