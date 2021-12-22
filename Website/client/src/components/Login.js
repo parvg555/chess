@@ -15,8 +15,10 @@ import Cookies from 'js-cookie';
 import { cancelable } from "cancelable-promise";
 
 import { Chessboard } from 'react-chessboard';
+import useWindowDimensions from './getWindowDimensions.js';
 
 function Login({logo}) {
+    const {height,width} = useWindowDimensions();
     const chessboardRef = useRef();
     const [login, setLogin] = useState(true);
     const [available, setAvailable] = useState(false);
@@ -273,6 +275,13 @@ function Login({logo}) {
                             animationDuration ={2000}
                             id="RandomVsRandom"
                             arePiecesDraggable={false}
+                            customDarkSquareStyle = {{
+                                backgroundColor:'#769656'
+                            }}
+                            customLightSquareStyle={{
+                                backgroundColor:'#eeeed2'
+                            }}
+                            boardWidth={(width/100)*45}
                             position={game.fen()}
                             ref={chessboardRef}
                             customBoardStyle={{
@@ -322,12 +331,12 @@ function Login({logo}) {
                                         placeholder='Password'
                                     />
                                 </div>
-                                <span>{loginMessage}</span>
+                                <span className='loginmessage'>{loginMessage}</span>
                                 <button className='login__hello-container__button'
                                 onClick={Login}> Log In</button>
                             </form>
                         
-                        <div onClick={() => setLogin(!login)} className="login__hello-container__button">
+                        <div onClick={() => setLogin(!login)} className="login__hello-container__button-signup">
                         Sign Up
                     </div>
             </div>

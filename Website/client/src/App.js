@@ -24,7 +24,7 @@ function App() {
           } />
           <Route path='/game' element = {
             <>
-              <Game/>              
+              <Game logo = {logo}/>              
             </>
           } />
         </Routes>
