@@ -1,0 +1,33 @@
+:root {
+    --chesscolor-dark:#769656;
+    --chesscolor-light:#eeeed2;
+    --sidebarbg-color:#272522;
+    --sidebarbg-color-light:#3a3732;
+    --background-color: #312e2b;
+    --sidebar-icon-color: #a2a1a0;
+    --sidebar-hover-color:#22211f;
+    --sidebar-text: #dfd9d9;
+    --sidebar-footer : #beb4b4;
+    --max-width-menu: 1020px;
+    --online-color : #69a032;
+    --moving-color : rgb(160, 161, 51);
+    --diconnected-color : rgb(185, 22, 22);
+
+}
+
+.square {
+    width: 12.5%;
+    height: 12.5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.black-square {
+    background-color: var(--chesscolor-dark);
+}
+
+.white-square {
+    background-color: var(--chesscolor-light);
+}

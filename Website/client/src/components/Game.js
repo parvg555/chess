@@ -2,79 +2,52 @@ import React, {useEffect , useState, useRef} from 'react'
 import axios from '../axios.js';
 import Cookies from 'js-cookie';
 import  { useNavigate } from 'react-router-dom'
-import { cancelable } from "cancelable-promise";
 import './css/Game.css';
-import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import QrCodeIcon from '@mui/icons-material/QrCode';
-import LogoutIcon from '@mui/icons-material/Logout';
 import LanguageIcon from '@mui/icons-material/Language';
 import InfoIcon from '@mui/icons-material/Info';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import { Avatar, IconButton } from "@mui/material";
-import MicSharpIcon from '@mui/icons-material/MicSharp';
 import ComputerIcon from '@mui/icons-material/Computer';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
+
+import { gameSubject,initGame } from './GameLogic.js';
+
 import Chess from 'chess.js';
 import {BehaviorSubject} from 'rxjs';
-
-import {useDrag, DragPreviewImage} from 'react-dnd';
-
-import b_b from '../assets/pieces2/b_b.png';
-import b_w from '../assets/pieces2/b_w.png';
-import k_b from '../assets/pieces2/k_b.png';
-import k_w from '../assets/pieces2/k_w.png';
-import n_b from '../assets/pieces2/n_b.png';
-import n_w from '../assets/pieces2/n_w.png';
-import p_b from '../assets/pieces2/p_b.png';
-import p_w from '../assets/pieces2/p_w.png';
-import q_b from '../assets/pieces2/q_b.png';
-import q_w from '../assets/pieces2/q_w.png';
-import r_b from '../assets/pieces2/r_b.png';
-import r_w from '../assets/pieces2/r_w.png';
-
+import Board from './Board.js';
 
 
 function Game({logo}) {
     const navigate = useNavigate();
     const [userData, setuserData] = useState({});
     const [boardStatus, setboardStatus] = useState("online");
-    const chess = new Chess();
-    
-    const gameSubject = new BehaviorSubject({
-        board:chess.board(),
-    })
-
+    const [userName, setuserName] = useState("parvg555");
+    const [chat, setchat] = useState([]);
     const [board, setboard] = useState([]);
 
+    const updateChat = (move) => {
+        const item = {
+            sender:userName,
+            message:move
+        }
+        setchat([item,...chat]);
+    }
+
+    const chess = new Chess();
+    
     useEffect(() => {
+        initGame();
         const subscribe = gameSubject.subscribe((game) => setboard(game.board))
         return () => subscribe.unsubscribe()
     }, [])
-
-    const getXYPosition = (i) => {
-        const x = i % 8;
-        const y = Math.abs(Math.floor(i / 8) - 7);
-        return {x,y};
-    }
-
-    const isBlack = (i) => {
-        const {x,y} = getXYPosition(i);
-        return (x + y) % 2 === 1;
-    }
-
-    const [, dragRef, preview] = useDrag({
-        item: {
-            type: 'piece',
-            id: `${type}_${color}`,
-        },
-    })
 
     useEffect(async () => {
             let isMounted = true;
@@ -94,46 +67,6 @@ function Game({logo}) {
                 isMounted = false;
             }
     },[]);
-
-    const getPiece  = (piece) => {
-        if(piece.type === "b" && piece.color === "b"){
-            return b_b;
-        }
-        if(piece.type === "b" && piece.color === "w"){
-            return b_w;
-        }
-        if(piece.type === "k" && piece.color === "b"){
-            return k_b;
-        }
-        if(piece.type === "k" && piece.color === "w"){
-            return k_w;
-        }
-        if(piece.type === "n" && piece.color === "b"){
-            return n_b;
-        }
-        if(piece.type === "n" && piece.color === "w"){
-            return n_w;
-        }
-        if(piece.type === "p" && piece.color === "w"){
-            return p_w;
-        }
-        if(piece.type === "p" && piece.color === "b"){
-            return p_b;
-        }
-        if(piece.type === "q" && piece.color === "b"){
-            return q_b;
-        }
-        if(piece.type === "q" && piece.color === "w"){
-            return q_w;
-        }
-        if(piece.type === "r" && piece.color === "b"){
-            return r_b;
-        }
-        if(piece.type === "r" && piece.color === "w"){
-            return r_w;
-        }
-    }
-
 
     return (
         <div className='Game'>
@@ -201,18 +134,8 @@ function Game({logo}) {
                 <div className='chess-container'>
                     <div className='chess'>
                         {/* <h2>container for chess board</h2> */}
-                        <DndProvider backend = {HTML5Backend}>
-                            <div className="board">
-                                {/* board code here */}
-                                {board.flat().map((piece,i) => (
-                                    <div key={i} className={`square ${
-                                        (isBlack(i))?'black-square':'white-square'
-                                    }`}  >
-                                        <DragPreviewImage connect={preview} src={getPiece(piece)}/>
-                                        {piece && (<img className='piece' src={getPiece(piece)} ref={dragRef}></img>)}
-                                    </div>
-                                ))}
-                            </div>
+                        <DndProvider backend = {HTML5Backend} >
+                            <Board board ={board} updateChat={updateChat}/>
                         </DndProvider>
                     </div>
                 </div>
@@ -237,18 +160,18 @@ function Game({logo}) {
                     </div>
                     {/* Moves Bar */}
                     <div className="moves">
-                        <div className="move">
-                            <p className='move-name'>Player 1</p>
-                            <p>A1 &#8594; B3</p>
-                        </div>
-                        <div className="move move_mine">
-                            <p className='move-name'>Player 2</p>
-                            <p>A4 &#8594; B7</p>
-                        </div>
+                        {chat.map((item,i) => (
+                            <div key={i} className={`move ${(item.sender === userName)?'move_mine':''}`}>
+                                <p className='move-name'>{item.sender}</p>
+                                <p>{item.message}</p>
+                            </div>
+                        ))}
                     </div>
                     {/* Options */}
                     <div className="options">
-                        <div className="button">
+                        <div className="button" onClick = {() => {
+                            initGame();
+                        }}>
                             Play Online
                         </div>
                         <div className='half-button-container'>
