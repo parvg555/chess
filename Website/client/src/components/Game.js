@@ -17,8 +17,8 @@ import ComputerIcon from '@mui/icons-material/Computer';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
-
-import { gameSubject,initGame } from './GameLogic.js';
+import CloseIcon from '@mui/icons-material/Close';
+import { gameSubject,initGame,resetGame } from './GameLogic.js';
 
 import Chess from 'chess.js';
 import {BehaviorSubject} from 'rxjs';
@@ -32,6 +32,9 @@ function Game({logo}) {
     const [userName, setuserName] = useState("parvg555");
     const [chat, setchat] = useState([]);
     const [board, setboard] = useState([]);
+    const [isGameOver, setisGameOver] = useState();
+    const [result, setResult] = useState();
+
 
     const updateChat = (move) => {
         const item = {
@@ -45,7 +48,11 @@ function Game({logo}) {
     
     useEffect(() => {
         initGame();
-        const subscribe = gameSubject.subscribe((game) => setboard(game.board))
+        const subscribe = gameSubject.subscribe((game) => {
+            setboard(game.board);
+            setisGameOver(game.isGameOver);
+            setResult(game.result);
+        })
         return () => subscribe.unsubscribe()
     }, [])
 
@@ -69,7 +76,34 @@ function Game({logo}) {
     },[]);
 
     return (
+        
         <div className='Game'>
+            {/* GAME OVER NOTIFICATION */}
+            { isGameOver?(
+                <div className='notification'>
+                    <div className='notification-dialogue'>
+                        {/* cross */}
+                        <div className='notification-cross'>
+                            <CloseIcon 
+                                fontSize='large'
+                                onClick = {() => {
+                                    resetGame();
+                                    setchat([]);
+                                }}
+                            />
+                        </div>
+                        {/* GAME OVER */}
+                        <div className='notification-gameOver'>
+                            GAME OVER!
+                        </div>
+                        <div className='notification-reason'>
+                            {result}
+                        </div>
+                            
+                        {/* REASON */}
+                    </div>
+                </div>
+            ):('')}                        
             {/* LEFT MENU BAR */}
             <div className='menu'>
                 <img  className='menu-logo' src={logo} alt="" />
