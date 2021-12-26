@@ -4,11 +4,11 @@ import './css/Square.css'
 import {useDrop} from 'react-dnd';
 import {move} from './GameLogic';
 
-function Square({id , piece , updateChat}) {
+function Square({id , piece , updateChat, turn}) {
 
     const getXYPosition = (i) => {
-        const x = i % 8;
-        const y = Math.abs(Math.floor(i / 8) - 7);
+        const x = turn==='w'? i % 8 : Math.abs((i%8) - 7);
+        const y = turn ==='w'? Math.abs(Math.floor(i / 8) - 7) : Math.floor(i/8);
         return {x,y};
     }
 

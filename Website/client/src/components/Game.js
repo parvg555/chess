@@ -34,17 +34,45 @@ function Game({logo}) {
     const [board, setboard] = useState([]);
     const [isGameOver, setisGameOver] = useState();
     const [result, setResult] = useState();
-
-
+    const [turn, setturn] = useState();
+    const [myColor, setmyColor] = useState('w');
+    const [checkCondition, setcheckCondition] = useState();
     const updateChat = (move) => {
         const item = {
-            sender:userName,
+            sender:turn,
             message:move
         }
         setchat([item,...chat]);
     }
 
+    const sendSystemMessage = (message) => {
+        const item = {
+            sender:'c',
+            message:message
+        }
+        setchat([item,...chat]);
+    }
+
     const chess = new Chess();
+
+    // const updateCheck = (check) => {
+    //     if(check){
+    //         setchat([{
+    //             sender:'c',
+    //             message:'CHECK!'
+    //         },...chat]);
+    //     }
+    //     console.log(check);
+    //     setcheckCondition(check);
+    // }
+    // useEffect(() => {
+    //     if(checkCondition){
+    //         setchat([{
+    //             sender:'c',
+    //             message:'CHECK!'
+    //         },...chat]);
+    //     }
+    // },[chat])
     
     useEffect(() => {
         initGame();
@@ -52,6 +80,8 @@ function Game({logo}) {
             setboard(game.board);
             setisGameOver(game.isGameOver);
             setResult(game.result);
+            setturn(game.turn);
+            setcheckCondition(game.check);
         })
         return () => subscribe.unsubscribe()
     }, [])
@@ -169,7 +199,7 @@ function Game({logo}) {
                     <div className='chess'>
                         {/* <h2>container for chess board</h2> */}
                         <DndProvider backend = {HTML5Backend} >
-                            <Board board ={board} updateChat={updateChat}/>
+                            <Board board ={board} updateChat={updateChat} myColor={turn} />
                         </DndProvider>
                     </div>
                 </div>
@@ -194,12 +224,39 @@ function Game({logo}) {
                     </div>
                     {/* Moves Bar */}
                     <div className="moves">
+                        {checkCondition?(
+                            <div className='move move-center'>
+                                <p>CHECK!</p>
+                            </div>
+                        ):''}
                         {chat.map((item,i) => (
-                            <div key={i} className={`move ${(item.sender === userName)?'move_mine':''}`}>
-                                <p className='move-name'>{item.sender}</p>
-                                <p>{item.message}</p>
+                            <div key={i} className={
+                                `move ${
+                                    (item.sender) === myColor?'move_mine':(
+                                        (item.sender) === 'c'?'move-center':''
+                                    )
+                                }`
+                            }>
+                            
+                            {item.sender !== 'c'?(
+                                <p className='move-name'>
+                                    {item.sender === 'b'?"BLACK":"WHITE"}
+                                </p>
+                            ):''}
+                            <p>{item.message}</p>
                             </div>
                         ))}
+                        {/* <div className='move move_mine'>
+                             <p className='move-name'>sender</p>
+                             <p> move1 </p>
+                        </div>
+                        <div className='move'>
+                             <p className='move-name'>sender</p>
+                             <p> move1 </p>
+                        </div>
+                        <div className='move move-center'>
+                             <p> System Messages Appear here </p>
+                        </div> */}
                     </div>
                     {/* Options */}
                     <div className="options">

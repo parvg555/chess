@@ -26,6 +26,8 @@ const updateGame = () => {
     const newGame = {
         board: chess.board(),
         isGameOver,
+        turn: chess.turn(),
+        check: chess.in_check(),
         result: isGameOver? getGameResult() : null
     }
     gameSubject.next(newGame)
