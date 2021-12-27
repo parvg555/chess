@@ -20,6 +20,13 @@ const userSchema = new mongoose.Schema({
         max:255,
         unique:true
     },
+    boardid: {
+        type:String,
+        required:false,
+        min:5,
+        max:15,
+        unique:true
+    },
     password: {
         type:String,
         required:true,

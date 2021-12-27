@@ -19,11 +19,12 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import CloseIcon from '@mui/icons-material/Close';
 import { gameSubject,initGame,resetGame } from './GameLogic.js';
-
+import io from 'socket.io-client'
 import Chess from 'chess.js';
-import {BehaviorSubject} from 'rxjs';
 import Board from './Board.js';
+import {CONNECTION_PORT} from '../credentials.js';
 
+let socket;
 
 function Game({logo}) {
     const navigate = useNavigate();
@@ -37,6 +38,18 @@ function Game({logo}) {
     const [turn, setturn] = useState();
     const [myColor, setmyColor] = useState('w');
     const [checkCondition, setcheckCondition] = useState();
+    const [onlineGame,setonlineGame] = useState(false);
+    const [vsComputer,setvsComputer] = useState(false);
+    const [multiPlayer, setmultiPlayer] = useState(false);
+
+
+    //Socket Programming
+    useEffect(() => {
+        socket = io(CONNECTION_PORT);
+    },[CONNECTION_PORT])
+
+
+    //Update the chat after every Move
     const updateChat = (move) => {
         const item = {
             sender:turn,
@@ -45,6 +58,7 @@ function Game({logo}) {
         setchat([item,...chat]);
     }
 
+    //updating chat with a system message
     const sendSystemMessage = (message) => {
         const item = {
             sender:'c',
@@ -53,26 +67,8 @@ function Game({logo}) {
         setchat([item,...chat]);
     }
 
+    // declaring a new chess game to subscribe to game in bg
     const chess = new Chess();
-
-    // const updateCheck = (check) => {
-    //     if(check){
-    //         setchat([{
-    //             sender:'c',
-    //             message:'CHECK!'
-    //         },...chat]);
-    //     }
-    //     console.log(check);
-    //     setcheckCondition(check);
-    // }
-    // useEffect(() => {
-    //     if(checkCondition){
-    //         setchat([{
-    //             sender:'c',
-    //             message:'CHECK!'
-    //         },...chat]);
-    //     }
-    // },[chat])
     
     useEffect(() => {
         initGame();
@@ -86,6 +82,7 @@ function Game({logo}) {
         return () => subscribe.unsubscribe()
     }, [])
 
+    // reads the token and extracts the id of user
     useEffect(async () => {
             let isMounted = true;
             const token = Cookies.get('token');
@@ -98,7 +95,10 @@ function Game({logo}) {
                     Cookies.remove('token');
                     navigate('/');
                 }
-                if(isMounted) setuserData(response.data)
+                if(isMounted) {
+                    setuserData(response.data)
+                    // console.log(userData);
+                }
             })
             return () => {
                 isMounted = false;
@@ -261,7 +261,8 @@ function Game({logo}) {
                     {/* Options */}
                     <div className="options">
                         <div className="button" onClick = {() => {
-                            initGame();
+                            resetGame();
+                            setchat([]);
                         }}>
                             Play Online
                         </div>

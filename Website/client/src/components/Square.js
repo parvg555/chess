@@ -14,7 +14,7 @@ function Square({id , piece , updateChat, turn}) {
 
     const isBlack = (i) => {
         const {x,y} = getXYPosition(i);
-        return (x + y) % 2 === 1;
+        return (x + y) % 2 === 0;
     }
 
     const getPostion = (i) => {
@@ -27,10 +27,10 @@ function Square({id , piece , updateChat, turn}) {
 
     const [,drop] = useDrop({
         accept:'piece',
-        drop: (item) => {
+        drop: async (item) => {
             const [fromPosition] = item.id.split('_')
             if (fromPosition !== myPosition && move(fromPosition,myPosition)) {
-                updateChat(`${fromPosition} → ${myPosition}`);
+                await updateChat(`${fromPosition} → ${myPosition}`);
             }
         },
     })
