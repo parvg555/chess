@@ -7,6 +7,7 @@ import Cors from 'cors'
 import Game from './routes/game.js'
 import {Server} from 'socket.io'
 import http from 'http'
+import { serialize } from 'v8'
 
 
 
@@ -24,13 +25,17 @@ app.use(cookieParser());
 app.use(AuthRouter);
 app.use(Game);
 
+app.get('/',(req,res) => {
+    return res.send("TOUCH ME NOT");
+})
+
 const connection_url = `mongodb+srv://${DBusername}:${DBpassword}@${DBcluster}.mongodb.net/${DBname}?retryWrites=true&w=majority`;
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
     cors:{
-        origin:"http://localhost:3000",
+        origin:["http://localhost:3000" , "*"],
         methods:["GET","POST"]
-    }
+    },
 })
 
 // COLOR LIBRARY FOR CONSOLE LOG
@@ -69,6 +74,7 @@ io.on("connection", (socket) => {
     })
 
 })
+
 
 mongoose
     .connect(connection_url)
