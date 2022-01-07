@@ -8,6 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import Chess from 'chess.js';
 import axios from '../axios.js';
 import  { useNavigate } from 'react-router-dom'
@@ -36,6 +37,7 @@ function Login({logo}) {
     })
 
     const [signupForm, setsignupForm] = useState({
+        name:"",
         username: "",
         email: "",
         password: ""
@@ -70,6 +72,7 @@ function Login({logo}) {
             setsignupForm("Username Already Taken");
         }else{
             const {data} = await axios.post("/register",{
+                name:signupForm.name,
                 username:signupForm.username,
                 email:signupForm.email,
                 password:signupForm.password
@@ -101,7 +104,6 @@ function Login({logo}) {
             password:loginForm.password
         })
         if(data.success){
-            console.log(data.token);
             Cookies.set('token',data.token,{expires:30});
             navigate('/game');
         }else{
@@ -115,6 +117,7 @@ function Login({logo}) {
         return () => {
           clearTimeout(latestTimeout);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     } ,[]);
 
     const resetGame = () => {
@@ -196,9 +199,23 @@ function Login({logo}) {
                     <form className='login__create-container__form-container__form' onSubmit={(e) => {
                         e.preventDefault();
                     }}>
+                         <div className='login__create-container__form-container__form__input'>
+                         <PersonIcon/>
+                            <input value={signupForm.name} 
+                                    type="text" 
+                                    placeholder='Full Name' 
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setsignupForm(prevState => ({
+                                            ...prevState,
+                                            name:value
+                                        }));
+                                    }}
+                            />
+                        </div>
 
                         <div className='login__create-container__form-container__form__input'>
-                            <PersonIcon/>
+                            <AlternateEmailIcon/>
                             <input value={signupForm.username}
                                     onChange={async (e) => {
                                         const value = e.target.value;
@@ -334,11 +351,12 @@ function Login({logo}) {
                                 <span className='loginmessage'>{loginMessage}</span>
                                 <button className='login__hello-container__button'
                                 onClick={Login}> Log In</button>
+                                <div onClick={() => setLogin(!login)} className="login__hello-container__button">
+                                Sign Up</div>
                             </form>
                         
-                        <div onClick={() => setLogin(!login)} className="login__hello-container__button-signup">
-                        Sign Up
-                    </div>
+                        
+                    
             </div>
 
 

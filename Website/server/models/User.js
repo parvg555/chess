@@ -22,10 +22,9 @@ const userSchema = new mongoose.Schema({
     },
     boardid: {
         type:String,
-        required:false,
-        min:5,
-        max:15,
-        unique:true
+        default:null,
+        min:4,
+        max:15
     },
     password: {
         type:String,

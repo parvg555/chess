@@ -12,7 +12,6 @@
     --online-color : #69a032;
     --moving-color : rgb(160, 161, 51);
     --diconnected-color : rgb(185, 22, 22);
-
 }
 
 @font-face{
@@ -25,7 +24,6 @@
     src: local('Quicksand-Regular'),url(../../assets/fonts/Quicksand_Book.otf) format('opentype');
 }
 
-
 .Game {
     display: flex;
     flex-direction: row;
@@ -35,135 +33,32 @@
     background-color: var(--background-color);
 }
 
-.menu {
-    background-color: var(--sidebarbg-color);
-    height: 100vh;
-    width: 10vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 1;
-    transition: all 0.8s ease-in-out;
-}
-
-.menu-logo {
-    margin: 2px;
-    width: 13vh;
-    max-width: 8vw;
-}
-
-.menu-item-container {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 3vh;
-    width: 100%;
-}
-
-.menu-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    color: var(--sidebar-icon-color);
-    cursor: pointer;
-}
-
-.menu-item > .MuiSvgIcon-root {
-    margin-left: 2px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    color: var(--sidebar-text);
-    width: 40%;
-}
-
-.menu-item > h2 {
-    margin-left: 2px;
-    font-size: 17px;
-    color: var(--sidebar-text);
-}
-
-.menu-item:hover {
-    background-color: var(--sidebar-hover-color);
-}
-
-.menu-item:hover > .MuiSvgIcon-root {
-    color: var(--chesscolor-dark);
-}
-
-
-.sidebar-footer {
-    position: absolute;
-    bottom: 2%;
-    width: 10vw;
-}
-
-.sidebar-footer-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    cursor: pointer;
-}
-
-.sidebar-footer-item > .MuiSvgIcon-root {
-    margin-left: 2px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    color: var(--sidebar-footer);
-    width: 30%;
-}
-
-.sidebar-footer-item > h2 {
-    font-size: 14px;
-    color: var(--sidebar-footer);
-}
-
-.sidebar-footer-item:hover {
-    background-color: var(--sidebar-hover-color);
-}
-
-.sidebar-footer-item:hover > h2 {
-    color: var(--sidebar-text);
-}
-
-@media (max-width: 1020px){
-    .menu-item > h2 {
-        display: none;
-    }
-
-    .menu-logo {
-        width: 5vw;
-    }
-
-    .menu-item > .MuiSvgIcon-root {
-        width: 70%;
-    }
-
-    .sidebar-footer-item > h2 {
-        display: none;
-    }
-
-    .sidebar-footer-item > .MuiSvgIcon-root {
-        width: 60%;
-    }
-
-    .sidebar-footer {
-        bottom: 0%;
-        width: 5vw;
-    }
-
-    .menu{
-        width: 5vw;
-    }
-}
-
 .gaming-area {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 60vw;
     height: 100vh;
+}
+
+.chess-container {
+    height: 600px;
+    max-height: 90vw;
+    width: 600px;
+    max-width: 90vw;
+}
+
+.chess {
+    height: 600px;
+    max-height: 90vw;
+    width: 600px;
+    max-width: 90vw;
+}
+
+@media (max-width: 1020px) {
+    .gaming-area {
+        width: 95vw;
+    }
 }
 
 .player {
@@ -197,20 +92,10 @@
     font-size: 16px;
 }
 
-
-.chess-container {
-    height: 600px;
-    max-height: 90vw;
-    width: 600px;
-    max-width: 90vw;
+.hidden { 
+    visibility: hidden;
 }
 
-.chess {
-    height: 600px;
-    max-height: 90vw;
-    width: 600px;
-    max-width: 90vw;
-}
 
 .right-menu {
     height: 100vh;
@@ -232,11 +117,9 @@
 }
 
 
-@media (max-width: 1020px) {
-    .gaming-area {
-        width: 95vw;
-    }
 
+
+@media (max-width: 1020px) {
     .right-menu {
         display: none;
     }
@@ -247,6 +130,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     transition: all 0.8s ease;
 }
@@ -392,53 +276,125 @@
     background-color: var(--sidebarbg-color-light);
 }
 
-.notification {
-    z-index: 100;
-    position: absolute;
-    height: 100%;
+.menu {
+    background-color: var(--sidebarbg-color);
+    height: 100vh;
+    width: 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    transition: all 0.8s ease-in-out;
+}
+
+.menu-logo {
+    margin: 2px;
+    width: 13vh;
+    max-width: 8vw;
+}
+
+.menu-item-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 3vh;
     width: 100%;
+}
+
+.menu-item {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    background-color: rgba(0,0,0,.5);
-}
-
-.notification-dialogue {
-    background-color: var(--chesscolor-dark);
-    height: 190px;
-    width: 500px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.notification-cross {
     width: 100%;
-    position: relative;
-    flex-direction: column;
-    align-self: start;
-}
-
-.notification-cross > .MuiSvgIcon-root {
-    position: relative;
-    float: right;
-    margin-top: 10px;
-    margin-right: 10px;
-    color: var(--sidebar-hover-color);
+    color: var(--sidebar-icon-color);
     cursor: pointer;
 }
 
-.notification-gameOver {
+.menu-item > .MuiSvgIcon-root {
+    margin-left: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     color: var(--sidebar-text);
-    font-weight: 600;
-    font-size: 55px;
+    width: 40%;
 }
 
-.notification-reason {
+.menu-item > h2 {
+    margin-left: 2px;
+    font-size: 17px;
     color: var(--sidebar-text);
-    font-size: 30px;
-    font-weight: 400;
 }
 
+.menu-item:hover {
+    background-color: var(--sidebar-hover-color);
+}
+
+.menu-item:hover > .MuiSvgIcon-root {
+    color: var(--chesscolor-dark);
+}
+
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 2%;
+    width: 10vw;
+}
+
+.sidebar-footer-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.sidebar-footer-item > .MuiSvgIcon-root {
+    margin-left: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: var(--sidebar-footer);
+    width: 30%;
+}
+
+.sidebar-footer-item > h2 {
+    font-size: 14px;
+    color: var(--sidebar-footer);
+}
+
+.sidebar-footer-item:hover {
+    background-color: var(--sidebar-hover-color);
+}
+
+.sidebar-footer-item:hover > h2 {
+    color: var(--sidebar-text);
+}
+
+@media (max-width: 1020px){
+    .menu-item > h2 {
+        display: none;
+    }
+
+    .menu-logo {
+        width: 5vw;
+    }
+
+    .menu-item > .MuiSvgIcon-root {
+        width: 70%;
+    }
+
+    .sidebar-footer-item > h2 {
+        display: none;
+    }
+
+    .sidebar-footer-item > .MuiSvgIcon-root {
+        width: 60%;
+    }
+
+    .sidebar-footer {
+        bottom: 0%;
+        width: 5vw;
+    }
+
+    .menu{
+        width: 5vw;
+    }
+}

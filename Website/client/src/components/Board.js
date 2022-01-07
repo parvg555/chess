@@ -1,9 +1,16 @@
+//Library Import
 import React , {useState, useEffect} from 'react'
+//Dependency Import
+
+//Components Import
 import Square from './Square.js'
+
+//Css Import
 import './css/Board.css'
 
 function Board({board, updateChat, myColor}) {
 
+    //Reverses the board according to the color of player
     const [currBoard, setCurrBoard] = useState([]);
     useEffect(() => {
         setCurrBoard(
@@ -19,3 +26,4 @@ function Board({board, updateChat, myColor}) {
 }
 
 export default Board
+//creates a board with squares and pieces

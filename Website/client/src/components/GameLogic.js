@@ -12,8 +12,8 @@ export const initGame = () => {
 
 export const gameSubject = new BehaviorSubject();
 
-export const move = (from,to) => {
-    const legalMove = chess.move({from,to,promotion:'q'});
+export const move = (from, to) => {
+    const legalMove = chess.move({ from, to, promotion: 'q' });
     if (legalMove) {
         updateGame()
         return true;
@@ -28,27 +28,27 @@ const updateGame = () => {
         isGameOver,
         turn: chess.turn(),
         check: chess.in_check(),
-        result: isGameOver? getGameResult() : null
+        result: isGameOver ? getGameResult() : null
     }
     gameSubject.next(newGame)
 }
 
 function getGameResult() {
-    if(chess.in_checkmate()){
-        const winner = chess.turn() === "w" ? "BLACK":"WHITE";
+    if (chess.in_checkmate()) {
+        const winner = chess.turn() === "w" ? "BLACK" : "WHITE";
         return `CHECKMATE-WINNER-${winner}`
-    } else if (chess.in_draw()){
+    } else if (chess.in_draw()) {
         let reason = '50-MOVES-RULE';
-        if(chess.in_stalemate()){
+        if (chess.in_stalemate()) {
             reason = 'STALEMATE'
-        }else if(chess.in_threefold_repetition()){
+        } else if (chess.in_threefold_repetition()) {
             reason = 'REPETITION'
-        }else if(chess.insufficient_material()){
+        } else if (chess.insufficient_material()) {
             reason = 'INSUFFICIENT MATERIAL'
         }
 
         return `DRAW-${reason}`;
-    } else{
+    } else {
         return 'UNKNOWN REASON';
     }
 }

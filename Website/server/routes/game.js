@@ -12,7 +12,11 @@ Game.get('/getUserData', Authorizer, async(req,res) => {
     })
     return res.send({
         'success':true,
-        '_id':user._id
+        '_id':user._id,
+        'name':user.name,
+        'username':user.username,
+        'email':user.email,
+        'boardid':user.boardid
     });
 })
 

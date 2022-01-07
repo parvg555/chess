@@ -1,14 +1,14 @@
-import './App.css';
-import Login from './components/Login';
+//Library Import
 import {BrowserRouter as Router,Route, Routes} from 'react-router-dom';
-import {useState, useEffect} from 'react';
-import axios from './axios.js';
-import Game from './components/Game';
-import Cookies from 'js-cookie';
-import  { Redirect,useNavigate } from 'react-router-dom'
-import {DndProvider} from 'react-dnd';
-import {HTML5Backend} from 'react-dnd-html5-backend';
 
+//Dependency Import
+
+//Components Import
+import Login from './components/Login';
+import Game from './components/Game';
+
+//Css Import
+import './App.css';
 
 function App() {
 
@@ -26,9 +26,7 @@ function App() {
           } />
           <Route path='/game' element = {
             <>
-            {/* <DndProvider backend = {HTML5Backend}> */}
               <Game logo = {logo}/>   
-            {/* </DndProvider>            */}
             </>
           } />
         </Routes>
