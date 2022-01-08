@@ -4,7 +4,7 @@ import "./config.js"
 import AuthRouter from './routes/auth.js'
 import cookieParser from 'cookie-parser'
 import Cors from 'cors'
-import Game from './routes/game.js'
+import UserData from './routes/UserData.js'
 import {Server} from 'socket.io'
 import http from 'http'
 import { serialize } from 'v8'
@@ -23,14 +23,16 @@ app.use(express.json());
 app.use(Cors());
 app.use(cookieParser());
 app.use(AuthRouter);
-app.use(Game);
+app.use(UserData);
 
 app.get('/',(req,res) => {
     return res.send("TOUCH ME NOT");
 })
 
 const connection_url = `mongodb+srv://${DBusername}:${DBpassword}@${DBcluster}.mongodb.net/${DBname}?retryWrites=true&w=majority`;
+
 const httpServer = http.createServer(app);
+
 const io = new Server(httpServer, {
     cors:{
         origin:["http://localhost:3000" , "*"],

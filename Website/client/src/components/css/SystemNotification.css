@@ -1,0 +1,49 @@
+.notification {
+    z-index: 101;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,.5);
+}
+
+.notification-dialogue {
+    background-color: var(--chesscolor-dark);
+    height: 190px;
+    width: 500px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.notification-cross {
+    width: 100%;
+    position: relative;
+    flex-direction: column;
+    align-self: start;
+}
+
+.notification-cross > .MuiSvgIcon-root {
+    position: relative;
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    color: var(--sidebar-hover-color);
+    cursor: pointer;
+}
+
+.notification-gameOver {
+    color: var(--sidebar-text);
+    font-weight: 600;
+    font-size: 55px;
+}
+
+.notification-reason {
+    color: var(--sidebar-text);
+    font-size: 30px;
+    font-weight: 400;
+}

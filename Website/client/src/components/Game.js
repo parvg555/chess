@@ -18,6 +18,7 @@ import GameOverNotification from "./GameOverNotification.js";
 import LeftMenu from './LeftMenu.js';
 import PlayerDetails from './PlayerDetails.js';
 import GameBar from './GameBar.js';
+import SystemNotification from './SystemNotification.js';
 
 //Css Import
 import './css/Game.css';
@@ -35,7 +36,7 @@ function Game({logo}) {
     //Use States for Game control
     const [userData, setuserData] = useState({});
     const [opponentData, setopponentData] = useState({});
-    const [notification, setnotification] = useState(false);
+    const [notification, setnotification] = useState({});
 
     const [boardStatus, setboardStatus] = useState("disconnected");
     const [userName, setuserName] = useState("parvg555");
@@ -88,6 +89,14 @@ function Game({logo}) {
         setchat([...chat,item]);
     }
 
+    //Sending System Notification
+    const sendSystemNotification = (heading,text) =>{
+        setnotification({
+            title:heading,
+            text:text
+        })
+    }
+
     //updating chat with a system message
     const sendSystemMessage = (message) => {
         const item = {
@@ -95,6 +104,11 @@ function Game({logo}) {
             message:message
         }
         setchat([...chat,item]);
+    }
+
+    //Coming Soon notification
+    const ComingSoon = () => {
+        sendSystemNotification('Coming Soon!','Work in Progress')
     }
 
     // declaring a new chess game to subscribe to game in bg
@@ -115,6 +129,11 @@ function Game({logo}) {
     return (
         
         <div className='Game'>
+            {/* System Notification */}
+            <SystemNotification
+                notification={notification}
+                setnotification={setnotification}
+            />
             {/* GAME OVER NOTIFICATION */}
             <GameOverNotification
                 isGameOver = {isGameOver}
@@ -125,6 +144,7 @@ function Game({logo}) {
             <div className='menu'>
                 <LeftMenu
                     logo = {logo}
+                    ComingSoon={ComingSoon}
                 />
             </div>
             {/* GAMING AREA */}
@@ -156,6 +176,7 @@ function Game({logo}) {
                 chat={chat}
                 myColor = {myColor}
                 setchat = {setchat}
+                ComingSoon={ComingSoon}
             />
         </div>
     )

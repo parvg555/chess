@@ -3,10 +3,10 @@ import {Authorizer} from "./verifyToken.js";
 import User from '../models/User.js';
 
 
-const Game = Router();
+const UserData = Router();
 
 
-Game.get('/getUserData', Authorizer, async(req,res) => {
+UserData.get('/getUserData', Authorizer, async(req,res) => {
     const user = await User.findOne({
         _id:req.user._id
     })
@@ -20,4 +20,4 @@ Game.get('/getUserData', Authorizer, async(req,res) => {
     });
 })
 
-export default Game
+export default UserData

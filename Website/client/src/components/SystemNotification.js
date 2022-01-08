@@ -1,10 +1,33 @@
 import React from 'react'
 
-function SystemNotification() {
+import CloseIcon from '@mui/icons-material/Close';
+
+import './css/SystemNotification.css';
+
+function SystemNotification({notification,setnotification}) {
     return (
-        <div>
-            
-        </div>
+        <>
+            {notification.title?(
+                <div className='notification'>
+                    <div className='notification-dialogue'>
+                        <div className='notification-cross'>
+                        <CloseIcon 
+                            fontSize='large'
+                            onClick = {() => {
+                                setnotification({});
+                            }}
+                        />
+                        </div>
+                        <div className='notification-gameOver'>
+                            {notification.title}
+                        </div>
+                        <div className='notification-reason'>
+                            {notification.text}
+                        </div>
+                    </div>
+                </div>
+            ):('')}
+        </>
     )
 }
 

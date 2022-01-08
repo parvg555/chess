@@ -6,6 +6,7 @@ import './css/Game.css'
 
 import ComputerIcon from '@mui/icons-material/Computer';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import GroupIcon from '@mui/icons-material/Group';
 
 function GameBar({
     userData,
@@ -13,7 +14,8 @@ function GameBar({
     checkCondition,
     chat,
     myColor,
-    setchat
+    setchat,
+    ComingSoon
 }) {
 
     const ChatsEndRef = useRef(null)
@@ -59,7 +61,7 @@ function GameBar({
                         ))}
                         <div ref={ChatsEndRef} />
                     </div>
-                    {/* Options */}
+                    {/* Play Options */}
                     <div className="options">
                         <div className="button" onClick = {() => {
                             resetGame();
@@ -68,16 +70,28 @@ function GameBar({
                             Play Online
                         </div>
                         <div className='half-button-container'>
-                            <div className="button-half">
-                                {/* <MicSharpIcon fontSize='large' /> */}
+                            <div 
+                                className="button-half"
+                                onClick={() => {
+                                    ComingSoon();
+                                }}
+                            >
                                 <ComputerIcon fontSize='large' />
                             </div>
-                            <div className="button-half right">
-                                {/* <LightbulbIcon fontSize='large' /> */}
-                                <PersonAddIcon fontSize='large' />
+                            <div 
+                                className="button-half right"
+                                onClick={() => {
+                                    ComingSoon();
+                                }}
+                            >
+                                <GroupIcon fontSize='large' />
                             </div>
                         </div>
                     </div>
+
+                    {/* INGAME OPTIONS */}
+
+
                 </div>
         </div>
     )
