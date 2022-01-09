@@ -3,7 +3,7 @@ import {resetGame} from './GameLogic.js';
 import './css/GameOverNotification.css';
 import CloseIcon from '@mui/icons-material/Close';
 
-function GameOverNotification({isGameOver,setchat,result}) {
+function GameOverNotification({isGameOver,setchat,result,setGameStatus}) {
     return (
         <>
         { isGameOver?(
@@ -15,7 +15,7 @@ function GameOverNotification({isGameOver,setchat,result}) {
                             fontSize='large'
                             onClick = {() => {
                                 resetGame();
-                                setchat([]);
+                                setGameStatus(false);
                             }}
                         />
                     </div>

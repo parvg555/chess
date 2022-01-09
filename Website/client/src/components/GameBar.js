@@ -15,14 +15,35 @@ function GameBar({
     chat,
     myColor,
     setchat,
-    ComingSoon
+    ComingSoon,
+    GameStatus,
+    time,
+    setTime,
+    setGameStatus,
+    startMultiplayerGame
 }) {
 
+    
+    //Scroll Moves/Chats to the latest
     const ChatsEndRef = useRef(null)
-
     useEffect(() => {
         ChatsEndRef.current?.scrollIntoView({behaviour: "smooth"})
     }, [chat])
+
+    //Increases time every 1 second
+    useEffect(() => {
+        let interval = null;
+        if(GameStatus === true){
+            interval = setInterval(() => {
+                setTime((time) => time+1);
+            },1000);
+        }else{
+            clearInterval(interval);
+        }
+        return () => {
+            clearInterval(interval);
+        };
+    },[GameStatus])
 
     return (
         <div className='right-menu'>
@@ -33,7 +54,11 @@ function GameBar({
                     </div>
                     {/* Timer */}
                     <div className="timer">
-                        <p>00:00</p>
+                        <p>{Math.floor((time)/3600) > 9?(Math.floor((time)/3600)):(`0${Math.floor((time)/3600)}`)}
+                            :
+                            {Math.floor(((time)/60)%60) > 9?(Math.floor(((time)/60)%60)):(`0${Math.floor(((time)/60)%60)}`)}
+                            :
+                            {Math.floor((time)%60) > 9?(Math.floor((time)%60)):(`0${Math.floor((time)%60)}`)}</p>
                     </div>
                     {/* Moves Bar */}
                     <div className="moves">
@@ -81,7 +106,7 @@ function GameBar({
                             <div 
                                 className="button-half right"
                                 onClick={() => {
-                                    ComingSoon();
+                                    startMultiplayerGame();
                                 }}
                             >
                                 <GroupIcon fontSize='large' />

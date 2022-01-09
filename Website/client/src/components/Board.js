@@ -8,7 +8,13 @@ import Square from './Square.js'
 //Css Import
 import './css/Board.css'
 
-function Board({board, updateChat, myColor}) {
+function Board({
+    board, 
+    updateChat, 
+    myColor,
+    gameStatus,
+    sendSystemMessage
+}) {
 
     //Reverses the board according to the color of player
     const [currBoard, setCurrBoard] = useState([]);
@@ -20,7 +26,16 @@ function Board({board, updateChat, myColor}) {
 
     return (
         <div className='board'>
-            {currBoard.flat().map((piece,i) => (<Square key={i} id={i} piece={piece} updateChat = {updateChat} turn = {myColor} />))}
+            {currBoard.flat().map((piece,i) => (
+            <Square 
+                key={i} 
+                id={i} 
+                piece={piece} 
+                updateChat = {updateChat} 
+                turn = {myColor} 
+                gameStatus = {gameStatus}
+                sendSystemMessage = {sendSystemMessage}
+            />))}
         </div>
     )
 }

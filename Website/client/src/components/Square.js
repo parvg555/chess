@@ -4,7 +4,14 @@ import './css/Square.css'
 import {useDrop} from 'react-dnd';
 import {move} from './GameLogic';
 
-function Square({id , piece , updateChat, turn}) {
+function Square({
+    id , 
+    piece , 
+    updateChat, 
+    turn, 
+    gameStatus,
+    sendSystemMessage
+}) {
 
     const getXYPosition = (i) => {
         const x = turn==='w'? i % 8 : Math.abs((i%8) - 7);
@@ -29,8 +36,12 @@ function Square({id , piece , updateChat, turn}) {
         accept:'piece',
         drop: async (item) => {
             const [fromPosition] = item.id.split('_')
-            if (fromPosition !== myPosition && move(fromPosition,myPosition)) {
+            if (gameStatus && fromPosition !== myPosition && move(fromPosition,myPosition)) {
                 await updateChat(`${fromPosition} → ${myPosition}`);
+            }else if(!gameStatus){
+                sendSystemMessage("Please Start a game to move!")
+            }else if(fromPosition !== myPosition){
+                sendSystemMessage("Invalid Move")
             }
         },
     })

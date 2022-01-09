@@ -210,7 +210,7 @@
 .move-center {
     background-color: var(--sidebarbg-color-light);
     color: var(--sidebar-text);
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 400;
     margin-left: auto;
     margin-right: auto;

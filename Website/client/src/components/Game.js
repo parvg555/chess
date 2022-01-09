@@ -37,9 +37,8 @@ function Game({logo}) {
     const [userData, setuserData] = useState({});
     const [opponentData, setopponentData] = useState({});
     const [notification, setnotification] = useState({});
-
-    const [boardStatus, setboardStatus] = useState("disconnected");
-    const [userName, setuserName] = useState("parvg555");
+    const [time,setTime] = useState(0);
+    const [gameStatus, setGameStatus] = useState(false);
     const [chat, setchat] = useState([]);
     const [board, setboard] = useState([]);
     const [isGameOver, setisGameOver] = useState();
@@ -47,9 +46,23 @@ function Game({logo}) {
     const [turn, setturn] = useState();
     const [myColor, setmyColor] = useState('w');
     const [checkCondition, setcheckCondition] = useState();
+    const [gameMode, setGameMode] = useState();
+
+    const [boardStatus, setboardStatus] = useState("disconnected");
     const [onlineGame,setonlineGame] = useState(false);
     const [vsComputer,setvsComputer] = useState(false);
     const [multiPlayer, setmultiPlayer] = useState(false);
+
+    //function to start MultiplayerOffline Game
+    const startMultiplayerGame = () => {
+        setchat([]);
+        setGameMode("MultiplayerOffline");
+        setTime(0);
+        sendSystemMessage('Multi-Player Game Started');
+        sendSystemMessage('Pass the device to take moves');
+        resetGame();
+        setGameStatus(true);
+    }
 
     // reads the token and extracts the id of user
     useAsyncEffect(async isMounted => {
@@ -86,7 +99,7 @@ function Game({logo}) {
             sender:turn,
             message:move
         }
-        setchat([...chat,item]);
+        setchat((chat) => [...chat,item]);
     }
 
     //Sending System Notification
@@ -103,7 +116,7 @@ function Game({logo}) {
             sender:'c',
             message:message
         }
-        setchat([...chat,item]);
+        setchat((chat) => [...chat,item]);
     }
 
     //Coming Soon notification
@@ -139,6 +152,7 @@ function Game({logo}) {
                 isGameOver = {isGameOver}
                 setchat = {setchat}
                 result = {result}
+                setGameStatus = {setGameStatus}
             />                        
             {/* LEFT MENU BAR */}
             <div className='menu'>
@@ -158,7 +172,15 @@ function Game({logo}) {
                     <div className='chess'>
                         {/* <h2>container for chess board</h2> */}
                         <DndProvider backend = {HTML5Backend} >
-                            <Board board ={board} updateChat={updateChat} myColor={turn} />
+                            <Board 
+                                board ={board} 
+                                updateChat={updateChat} 
+                                myColor={
+                                    gameMode==="MultiplayerOffline"?(turn):(myColor)
+                                }
+                                gameStatus = {gameStatus} 
+                                sendSystemMessage = {sendSystemMessage}
+                            />
                         </DndProvider>
                     </div>
                 </div>
@@ -177,6 +199,11 @@ function Game({logo}) {
                 myColor = {myColor}
                 setchat = {setchat}
                 ComingSoon={ComingSoon}
+                time = {time}
+                setTime={setTime}
+                GameStatus = {gameStatus}
+                setGameStatus = {setGameStatus}
+                startMultiplayerGame = {startMultiplayerGame}
             />
         </div>
     )
