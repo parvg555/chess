@@ -37,22 +37,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 60vw;
     height: 100vh;
 }
 
 .chess-container {
-    height: 600px;
-    max-height: 90vw;
-    width: 600px;
-    max-width: 90vw;
+    height: 700px;
+    max-height: 60vw;
+    width: 700px;
+    max-width: 60vw;
 }
 
 .chess {
-    height: 600px;
-    max-height: 90vw;
-    width: 600px;
-    max-width: 90vw;
+    height: 700px;
+    max-height: 60vw;
+    width: 700px;
+    max-width: 60vw;
 }
 
 @media (max-width: 1020px) {
@@ -65,9 +66,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 10vh;
-    width: 50vw;
-    max-width: 80vh;
+    margin-top: 5px;
+    height: 8vh;
+    width: 700px;
+    max-width: 60vw;
 }
 
 .photo-container {

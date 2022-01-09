@@ -35,7 +35,10 @@ function Game({logo}) {
 
     //Use States for Game control
     const [userData, setuserData] = useState({});
-    const [opponentData, setopponentData] = useState({});
+    const [opponentData, setopponentData] = useState({
+        // 'name':"Parv Gupta",
+        // 'username':"parvg555"
+    });
     const [notification, setnotification] = useState({});
     const [time,setTime] = useState(0);
     const [gameStatus, setGameStatus] = useState(false);
@@ -53,7 +56,7 @@ function Game({logo}) {
     const [vsComputer,setvsComputer] = useState(false);
     const [multiPlayer, setmultiPlayer] = useState(false);
 
-    //function to start MultiplayerOffline Game
+    //start MultiplayerOffline Game
     const startMultiplayerGame = () => {
         setchat([]);
         setGameMode("MultiplayerOffline");
@@ -152,6 +155,7 @@ function Game({logo}) {
                 isGameOver = {isGameOver}
                 setchat = {setchat}
                 result = {result}
+                gameStatus = {gameStatus}
                 setGameStatus = {setGameStatus}
             />                        
             {/* LEFT MENU BAR */}
@@ -204,6 +208,7 @@ function Game({logo}) {
                 GameStatus = {gameStatus}
                 setGameStatus = {setGameStatus}
                 startMultiplayerGame = {startMultiplayerGame}
+                isGameOver = {isGameOver}
             />
         </div>
     )

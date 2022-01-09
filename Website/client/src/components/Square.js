@@ -5,8 +5,8 @@ import {useDrop} from 'react-dnd';
 import {move} from './GameLogic';
 
 function Square({
-    id , 
-    piece , 
+    id, 
+    piece, 
     updateChat, 
     turn, 
     gameStatus,
@@ -48,7 +48,26 @@ function Square({
 
     return (
         <div className={`square ${(isBlack(id))?'black-square':'white-square'}`} ref={drop}>
+            <div 
+                unselectable='on'
+                className={`square-position-number 
+                ${!isBlack(id)?('black-font'):('white-font')}
+                ${((turn === 'w' && getPostion(id)[0] === 'a') || (turn === 'b' && getPostion(id)[0] === 'h'))?(''):('hide')}
+            `}>
+                {getPostion(id)[1]}
+            </div>
+            <div className='piece-container'>
             { piece &&  <Piece piece={piece} position = {getPostion(id)}/>}
+            </div>
+
+            <div 
+                unselectable='on'
+                className={`square-position-text 
+                ${!isBlack(id)?('black-font'):('white-font')}
+                ${((turn === 'w' && getPostion(id)[1] === '1') || (turn==='b' && getPostion(id)[1] === '8'))?(''):('hide')}
+            `}>
+                {getPostion(id)[0]}
+            </div>
         </div>
     )
 }

@@ -1,12 +1,14 @@
 import React,{useEffect,useRef} from 'react'
 
-import { resetGame } from './GameLogic';
+import { gameSubject, resetGame } from './GameLogic';
 
 import './css/Game.css'
 
 import ComputerIcon from '@mui/icons-material/Computer';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import GroupIcon from '@mui/icons-material/Group';
+import MicIcon from '@mui/icons-material/Mic';
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
 
 function GameBar({
     userData,
@@ -20,7 +22,8 @@ function GameBar({
     time,
     setTime,
     setGameStatus,
-    startMultiplayerGame
+    startMultiplayerGame,
+    isGameOver
 }) {
 
     
@@ -33,7 +36,7 @@ function GameBar({
     //Increases time every 1 second
     useEffect(() => {
         let interval = null;
-        if(GameStatus === true){
+        if(GameStatus === true && !isGameOver){
             interval = setInterval(() => {
                 setTime((time) => time+1);
             },1000);
@@ -43,7 +46,7 @@ function GameBar({
         return () => {
             clearInterval(interval);
         };
-    },[GameStatus])
+    },[GameStatus,isGameOver])
 
     return (
         <div className='right-menu'>
@@ -87,35 +90,84 @@ function GameBar({
                         <div ref={ChatsEndRef} />
                     </div>
                     {/* Play Options */}
-                    <div className="options">
-                        <div className="button" onClick = {() => {
-                            resetGame();
-                            setchat([]);
-                        }}>
-                            Play Online
-                        </div>
-                        <div className='half-button-container'>
-                            <div 
-                                className="button-half"
-                                onClick={() => {
-                                    ComingSoon();
-                                }}
-                            >
-                                <ComputerIcon fontSize='large' />
+                    {
+                        GameStatus===false && 
+                        isGameOver===false && (
+                        <div className="options">
+                            <div className="button" onClick = {() => {
+                                resetGame();
+                                setchat([]);
+                            }}>
+                                Play Online
                             </div>
-                            <div 
-                                className="button-half right"
-                                onClick={() => {
-                                    startMultiplayerGame();
-                                }}
-                            >
-                                <GroupIcon fontSize='large' />
+                            <div className='half-button-container'>
+                                <div 
+                                    className="button-half"
+                                    onClick={() => {
+                                        ComingSoon();
+                                    }}
+                                >
+                                    <ComputerIcon fontSize='large' />
+                                </div>
+                                <div 
+                                    className="button-half right"
+                                    onClick={() => {
+                                        startMultiplayerGame();
+                                    }}
+                                >
+                                    <GroupIcon fontSize='large' />
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
+                        </div>)
+                    }
                     {/* INGAME OPTIONS */}
-
+                    {
+                        GameStatus===true && 
+                        isGameOver===false && (
+                        <div className="options">
+                            <div className="button" onClick = {() => {
+                                setGameStatus(false);
+                            }}>
+                                End Game
+                            </div>
+                            <div className='half-button-container'>
+                                <div 
+                                    className="button-half"
+                                    onClick={() => {
+                                        ComingSoon();
+                                    }}
+                                >
+                                    <MicIcon fontSize='large' />
+                                </div>
+                                <div 
+                                    className="button-half right"
+                                    onClick={() => {
+                                        ComingSoon();
+                                    }}
+                                >
+                                    <LightbulbIcon fontSize='large' />
+                                </div>
+                            </div>
+                        </div>)
+                    }
+                    {
+                        isGameOver===true && (
+                        <div className="options">
+                            <div className="button" onClick = {() => {
+                                startMultiplayerGame();
+                            }}>
+                                Play Again
+                            </div>
+                            <div className="button" onClick = {() => {
+                                resetGame();
+                                setchat([]);
+                                setTime(0);
+                            }}>
+                                Back to Main Menu
+                            </div>
+                            
+                        </div>)
+                    }
 
                 </div>
         </div>
