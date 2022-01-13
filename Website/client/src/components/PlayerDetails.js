@@ -4,6 +4,9 @@ import './css/Game.css'
 
 import {Avatar} from "@mui/material";
 import { height } from '@mui/system';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
 
 function PlayerDetails({image,name,details,visible}) {
 
@@ -24,10 +27,23 @@ function PlayerDetails({image,name,details,visible}) {
 
     return (
         <div className={`player ${!visible && 'hidden'}`}>
-            <Avatar {...stringAvatar(name)} variant="rounded"/>
+            {   details !=='waiting' ?(
+                <Avatar {...stringAvatar(name)} variant="rounded"/>
+                ):(
+                    <Box sx={{display:'flex'}}>
+                        <CircularProgress sx={{color:'#dfd9d9'}}/>
+                    </Box>
+                )
+            }
             <div className="player-details">
                 <h2>{name}</h2>
-                <p>@{details}</p>
+                <p>
+                    {   details !=='waiting' &&
+                        <>
+                            @{details}
+                        </>
+                    }
+                </p>
             </div>
         </div>
     )
