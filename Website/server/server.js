@@ -7,8 +7,7 @@ import Cors from 'cors'
 import UserData from './routes/UserData.js'
 import {Server} from 'socket.io'
 import http from 'http'
-import { serialize } from 'v8'
-
+import gameSockets from './sockets/gameSockets.js'
 
 const app = express()
 const port = process.env.PORT || 8001;
@@ -37,6 +36,7 @@ const io = new Server(httpServer, {
         origin:["http://localhost:3000" , "*"],
         methods:["GET","POST"]
     },
+    transports: ['websocket']
 })
 
 // COLOR LIBRARY FOR CONSOLE LOG
@@ -70,7 +70,30 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
     console.log('\x1b[32m',`NEW SOCKET CONNECTION:${socket.id}`);
 
+    socket.on('mount-username', (username) => {
+        socket.username = username;
+    })
+
+    socket.on('get-username', (callBack) => {
+        if(socket.username){
+            callBack(socket.username);
+        }else{
+            callBack("Error");
+        }
+    })
+
+    gameSockets(socket);
+
+    socket.on('logout', () => {
+        socket.disconnect(0);
+    })
+
     socket.on("disconnect", () => {
+        if(socket.roomid){
+            socket.to(socket.roomid).emit('opponent-left')
+            socket.leave(socket.roomid);
+            socket.roomid = null;
+        }
         console.log('\x1b[31m',`SOCKET DISCONNECTED:${socket.id}`);
     })
 

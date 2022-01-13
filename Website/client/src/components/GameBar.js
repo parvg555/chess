@@ -1,14 +1,16 @@
-import React,{useEffect,useRef} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
+import useAsyncEffect from 'use-async-effect'
 
-import { gameSubject, resetGame } from './GameLogic';
+
+import { resetGame } from './GameLogic';
 
 import './css/Game.css'
 
 import ComputerIcon from '@mui/icons-material/Computer';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import GroupIcon from '@mui/icons-material/Group';
 import MicIcon from '@mui/icons-material/Mic';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
+
 
 function GameBar({
     userData,
@@ -23,10 +25,37 @@ function GameBar({
     setTime,
     setGameStatus,
     startMultiplayerGame,
-    isGameOver
+    isGameOver,
+    gameMode,
+    setGameMode,
+    sendSystemNotification,
+    socket,
+    sendSystemMessage,
+    setopponentData,
+    waitingForPlayer,
+    setWaitingForPlayer,
+    joinButtonLoading,
+    setJoinButtonLoading,
+    createButtonLoading,
+    setCreateButtonLoading,
+    leaveGameButtonLoading,
+    setLeaveGameButtonLoading,
+    CreateNewRoom,
+    DeleteRoom,
+    JoinRoom,
+    joinRoomInput,
+    setJoinRoomInput,
+    startGame,
+    opponentData,
+    startGameButtonLoading,
+    leaveGame,
 }) {
+    //check if user is waiting for player2 in online game
+    
+
 
     
+
     //Scroll Moves/Chats to the latest
     const ChatsEndRef = useRef(null)
     useEffect(() => {
@@ -47,6 +76,9 @@ function GameBar({
             clearInterval(interval);
         };
     },[GameStatus,isGameOver])
+
+   
+    
 
     return (
         <div className='right-menu'>
@@ -84,19 +116,25 @@ function GameBar({
                                     {item.sender === 'b'?"BLACK":"WHITE"}
                                 </p>
                             ):''}
-                            <p>{item.message}</p>
+                            {item.message.toString().split('\n').map((str,key) => (
+                                <p key={key}>{str}</p>
+                            ))}
+                            {/* <p>{item.message}</p> */}
                             </div>
                         ))}
                         <div ref={ChatsEndRef} />
                     </div>
                     {/* Play Options */}
-                    {
+                    {   
+                        gameMode !== 'MultiplayerOnline' &&
                         GameStatus===false && 
                         isGameOver===false && (
                         <div className="options">
                             <div className="button" onClick = {() => {
-                                resetGame();
+                                setGameMode("MultiplayerOnline")
                                 setchat([]);
+                                resetGame();
+                                setTime(0);
                             }}>
                                 Play Online
                             </div>
@@ -121,12 +159,14 @@ function GameBar({
                         </div>)
                     }
                     {/* INGAME OPTIONS */}
-                    {
+                    {   
+                        gameMode==="MultiplayerOffline" &&
                         GameStatus===true && 
                         isGameOver===false && (
                         <div className="options">
                             <div className="button" onClick = {() => {
                                 setGameStatus(false);
+                                sendSystemNotification("Game Ended","user ended the game");
                             }}>
                                 End Game
                             </div>
@@ -151,6 +191,7 @@ function GameBar({
                         </div>)
                     }
                     {
+                        gameMode==="MultiplayerOffline" &&
                         isGameOver===true && (
                         <div className="options">
                             <div className="button" onClick = {() => {
@@ -167,6 +208,139 @@ function GameBar({
                             </div>
                             
                         </div>)
+                    }
+                    {/* Menu for Online Game */}
+                    {
+                        gameMode === "MultiplayerOnline" &&
+                        waitingForPlayer === false &&
+                        GameStatus === false &&
+                        isGameOver === false &&
+                        !opponentData.username &&
+                        (
+                            <div className="options">
+
+                                <div className='join-room-container'>
+                                    <input 
+                                        type="text"
+                                        id='room-id' 
+                                        placeholder='RoomID' 
+                                        className='join-room-input'
+                                        value={joinRoomInput}
+                                        onChange={(e)=>{
+                                            setJoinRoomInput(e.target.value)
+                                        }}
+                                    />
+                                    <div 
+                                        className='button-join'
+                                        onClick={async () => {
+                                            await JoinRoom();
+                                        }}
+                                    >
+
+                                        {joinButtonLoading?
+                                            ( <div className='button-loading'></div>):
+                                            ('Join')
+                                        }
+                                    </div>
+                                </div>
+                                <div 
+                                    className="button-small"
+                                    onClick={async () => {
+                                        await CreateNewRoom();
+                                    }}
+                                >
+                                    {createButtonLoading?
+                                        (<div className='button-loading'></div>):
+                                        ('Create Room')
+                                    }
+                                </div>
+                                <div 
+                                    className="button-small"
+                                    onClick={() => {
+                                        setGameMode("");
+                                    }}
+                                >
+                                    Main menu
+                                </div>
+                            </div>)
+                    }
+                    {
+                        gameMode === "MultiplayerOnline" &&
+                        waitingForPlayer === true &&
+                        GameStatus === false &&
+                        isGameOver === false &&
+                        (
+                            <div className="options">
+                                <div className="button" onClick = {async () => {
+                                    await DeleteRoom()
+                                }}>
+                                    {   leaveGameButtonLoading?
+                                        (<div className='button-loading'></div>):
+                                        ('Leave Game')
+                                    }
+                                </div>    
+                            </div>)
+                    }
+                    {
+                        gameMode === "MultiplayerOnline" &&
+                        waitingForPlayer === false &&
+                        GameStatus === false &&
+                        isGameOver === false &&
+                        opponentData.username &&
+                        (
+                            <div className="options">
+                                <div className="button" onClick = {async () => {
+                                    await startGame();
+                                }}>
+                                    {   startGameButtonLoading?
+                                        (<div className='button-loading'></div>):
+                                        ('Start Game')
+                                    }
+                                </div>  
+                                <div className="button" onClick = {async () => {
+                                    await leaveGame();
+                                }}>
+                                    {   leaveGameButtonLoading? 
+                                        (<div className='button-loading'></div>):
+                                        ('Leave Game')
+                                    }
+                                </div>   
+                            </div>)
+                    }
+                    {
+                        gameMode === "MultiplayerOnline" &&
+                        waitingForPlayer === false &&
+                        GameStatus === true &&
+                        isGameOver === false &&
+                        opponentData.username &&(
+                            <div className="options">
+                                <div className="button" onClick = {async() => {
+                                    await leaveGame();
+                                }}>
+                                    {   leaveGameButtonLoading? 
+                                        (<div className='button-loading'></div>):
+                                        ('Leave Game')
+                                    }
+                                </div>
+                                <div className='half-button-container'>
+                                    <div 
+                                        className="button-half"
+                                        onClick={() => {
+                                            ComingSoon();
+                                        }}
+                                    >
+                                        <MicIcon fontSize='large' />
+                                    </div>
+                                    <div 
+                                        className="button-half right"
+                                        onClick={() => {
+                                            ComingSoon();
+                                        }}
+                                    >
+                                        <LightbulbIcon fontSize='large' />
+                                    </div>
+                                </div>
+                            </div>)
                     }
 
                 </div>

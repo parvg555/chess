@@ -6,11 +6,9 @@ import {move} from './GameLogic';
 
 function Square({
     id, 
-    piece, 
-    updateChat, 
+    piece,
     turn, 
-    gameStatus,
-    sendSystemMessage
+    makeMove
 }) {
 
     const getXYPosition = (i) => {
@@ -35,14 +33,8 @@ function Square({
     const [,drop] = useDrop({
         accept:'piece',
         drop: async (item) => {
-            const [fromPosition] = item.id.split('_')
-            if (gameStatus && fromPosition !== myPosition && move(fromPosition,myPosition)) {
-                await updateChat(`${fromPosition} → ${myPosition}`);
-            }else if(!gameStatus){
-                sendSystemMessage("Please Start a game to move!")
-            }else if(fromPosition !== myPosition){
-                sendSystemMessage("Invalid Move")
-            }
+            const [fromPosition] = item.id.split('_');
+            await makeMove(fromPosition,myPosition);
         },
     })
 

@@ -14,7 +14,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 
-function LeftMenu({logo,ComingSoon}) {
+function LeftMenu({logo,ComingSoon,socket}) {
 
     const navigate = useNavigate();
 
@@ -68,6 +68,7 @@ function LeftMenu({logo,ComingSoon}) {
             <div className="sidebar-footer">
                 <div onClick={() => {
                         Cookies.remove('token');
+                        socket.emit('logout');
                         navigate('/');
                     }} 
                     className='sidebar-footer-item'

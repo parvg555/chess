@@ -10,10 +10,8 @@ import './css/Board.css'
 
 function Board({
     board, 
-    updateChat, 
     myColor,
-    gameStatus,
-    sendSystemMessage
+    makeMove,
 }) {
 
     //Reverses the board according to the color of player
@@ -31,10 +29,8 @@ function Board({
                 key={i} 
                 id={i} 
                 piece={piece} 
-                updateChat = {updateChat} 
                 turn = {myColor} 
-                gameStatus = {gameStatus}
-                sendSystemMessage = {sendSystemMessage}
+                makeMove = {makeMove}
             />))}
         </div>
     )
