@@ -128,7 +128,8 @@ function GameBar({
                     {   
                         gameMode !== 'MultiplayerOnline' &&
                         GameStatus===false && 
-                        isGameOver===false && (
+                        isGameOver===false && 
+                        waitingForPlayer===false && (
                         <div className="options">
                             <div className="button" onClick = {() => {
                                 setGameMode("MultiplayerOnline")
@@ -257,7 +258,7 @@ function GameBar({
                                 <div 
                                     className="button-small"
                                     onClick={() => {
-                                        setGameMode("");
+                                        setGameMode('off');
                                     }}
                                 >
                                     Main menu
@@ -339,6 +340,30 @@ function GameBar({
                                     >
                                         <LightbulbIcon fontSize='large' />
                                     </div>
+                                </div>
+                            </div>)
+                    }
+                    
+                    {
+                    
+                    gameMode !== 'MultiplayerOffline' &&
+                    GameStatus===false && 
+                    isGameOver===true && 
+                    waitingForPlayer===false &&
+                    
+                        (
+                            <div className="options">
+                                <div 
+                                    className="button"
+                                    onClick={() => {
+                                        setGameMode('off');
+                                        setopponentData({});
+                                        setGameStatus(false);
+                                        setWaitingForPlayer(false);
+                                        resetGame();
+                                    }}
+                                >
+                                    Main menu
                                 </div>
                             </div>)
                     }

@@ -1,5 +1,6 @@
 //Library Import
-import React,{useEffect , useState, useRef} from 'react';
+import React,{useEffect , useRef} from 'react';
+import { useState } from 'react';
 import axios from '../axios.js';
 import Cookies from 'js-cookie';
 import {useNavigate} from 'react-router-dom';
@@ -60,7 +61,7 @@ function Game({logo}) {
     // const [onlineGameMode,setOnlineGameMOde] = useState();
 
 
-    const [boardStatus, setboardStatus] = useState("disconnected");
+    const [boardStatus, setboardStatus,boardStatusRef] = useState("disconnected");
 
     //start MultiplayerOffline Game
     const startMultiplayerGame = () => {
@@ -171,7 +172,7 @@ function Game({logo}) {
     useAsyncEffect(() => {
         socket.on('disconnect', () => {
             if(gameMode === "MultiplayerOnline"){
-                setGameMode();
+                setGameMode('off');
                 setGameStatus(false);
                 sendSystemNotification("Disconnected","Connection Lost");
                 sendSystemMessage("PLEASE REFRESH!");
@@ -187,7 +188,7 @@ function Game({logo}) {
             socket.timeout(10000).emit('leave-game',(error,response)=>{
                 if(response) sendSystemMessage('Opponent Left the match');
             });
-            setGameMode();
+            setGameMode('off');
             setGameStatus(false);
             sendSystemMessage("PLEASE REFRESH!");
             sendSystemNotification("Game Over","opponent left the game");
@@ -283,7 +284,7 @@ function Game({logo}) {
                     sendSystemMessage("An Error Occured");
                     
                 }else if(response === 'deleted'){
-                    setGameMode();
+                    setGameMode('off');
                     setGameStatus(false);
                     setWaitingForPlayer(false);
                     setopponentData({});
@@ -306,7 +307,7 @@ function Game({logo}) {
         try{
             await socket.timeout(10000).emit('leave-game',(err,response) => {
                 if(response!=='error'){
-                    setGameMode();
+                    setGameMode('off');
                     setGameStatus(false);
                     setWaitingForPlayer(false);
                     setopponentData({});
@@ -408,7 +409,11 @@ function Game({logo}) {
                 setchat = {setchat}
                 result = {result}
                 gameStatus = {gameStatus}
-                setGameStatus = {setGameStatus}
+                setGameStatus={setGameStatus}
+                setGameMode={setGameMode}
+                setopponentData={setopponentData}
+                gameMode={gameMode}
+                socket = {socket}
             />                        
             {/* LEFT MENU BAR */}
             <div className='menu'>

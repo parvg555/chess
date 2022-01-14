@@ -33,7 +33,6 @@ const gameSockets = (socket) => {
         try{
             if(socket.adapter.rooms.has(parseInt(data))){
                 if(socket.adapter.rooms.get(parseInt(data)).size === 1){
-                    var [opponent] = socket.adapter.rooms.get(parseInt(data));
                     callbackFn(data);
                     socket.join(parseInt(data));
                     socket.roomid = parseInt(data);
@@ -91,6 +90,11 @@ const gameSockets = (socket) => {
         }else{
             callbackFn('error');
         }
+    })
+
+    socket.on('game-over', () => {
+            socket.leave(socket.roomid);
+            socket.roomid = null;
     })
 
 }
