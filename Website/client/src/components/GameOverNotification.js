@@ -1,8 +1,6 @@
 import React from 'react'
-import {resetGame} from './GameLogic.js';
 import './css/GameOverNotification.css';
 import CloseIcon from '@mui/icons-material/Close';
-import { Socket } from 'socket.io-client';
 
 function GameOverNotification({
     isGameOver,

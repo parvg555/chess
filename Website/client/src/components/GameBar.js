@@ -1,6 +1,4 @@
 import React,{useState,useEffect,useRef} from 'react'
-import useAsyncEffect from 'use-async-effect'
-
 
 import { resetGame } from './GameLogic';
 
@@ -29,32 +27,24 @@ function GameBar({
     gameMode,
     setGameMode,
     sendSystemNotification,
-    socket,
-    sendSystemMessage,
     setopponentData,
     waitingForPlayer,
     setWaitingForPlayer,
     joinButtonLoading,
-    setJoinButtonLoading,
     createButtonLoading,
-    setCreateButtonLoading,
     leaveGameButtonLoading,
-    setLeaveGameButtonLoading,
     CreateNewRoom,
     DeleteRoom,
     JoinRoom,
-    joinRoomInput,
-    setJoinRoomInput,
     startGame,
     opponentData,
     startGameButtonLoading,
     leaveGame,
 }) {
-    //check if user is waiting for player2 in online game
     
 
-
-    
+    //Join room input field
+    const [joinRoomInput, setJoinRoomInput] = useState("");
 
     //Scroll Moves/Chats to the latest
     const ChatsEndRef = useRef(null)
@@ -75,10 +65,8 @@ function GameBar({
         return () => {
             clearInterval(interval);
         };
-    },[GameStatus,isGameOver])
+    },[GameStatus,isGameOver,setTime])
 
-   
-    
 
     return (
         <div className='right-menu'>
@@ -234,7 +222,8 @@ function GameBar({
                                     <div 
                                         className='button-join'
                                         onClick={async () => {
-                                            await JoinRoom();
+                                            await JoinRoom(joinRoomInput);
+                                            setJoinRoomInput("");
                                         }}
                                     >
 

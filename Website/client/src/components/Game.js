@@ -1,5 +1,5 @@
 //Library Import
-import React,{useEffect , useRef} from 'react';
+import React,{useEffect} from 'react';
 import { useState } from 'react';
 import axios from '../axios.js';
 import Cookies from 'js-cookie';
@@ -56,12 +56,12 @@ function Game({logo}) {
     const [joinButtonLoading, setJoinButtonLoading] = useState(false);
     const [createButtonLoading, setCreateButtonLoading] = useState(false);
     const [leaveGameButtonLoading, setLeaveGameButtonLoading] = useState(false);
-    const [joinRoomInput, setJoinRoomInput] = useState();
+    
     // const [SocketConnecting,setSocketConnecting] = useState(false);
     // const [onlineGameMode,setOnlineGameMOde] = useState();
 
 
-    const [boardStatus, setboardStatus,boardStatusRef] = useState("disconnected");
+    const [boardStatus, setboardStatus] = useState("disconnected");
 
     //start MultiplayerOffline Game
     const startMultiplayerGame = () => {
@@ -325,7 +325,7 @@ function Game({logo}) {
     }
 
     //Join Room
-    const JoinRoom = async () => {
+    const JoinRoom = async (joinRoomInput) => {
         setJoinButtonLoading(true);
         try{
             const myData = {
@@ -344,7 +344,6 @@ function Game({logo}) {
                         sendSystemMessage("PLEASE RETRY!");
                     }else{
                         sendSystemMessage(`Joined Room: ${response}`);
-                        setJoinRoomInput("");
                         setopponentData({
                             'name':"Waiting for opponent to start",
                             'username':'waiting'
@@ -452,41 +451,68 @@ function Game({logo}) {
             </div>
             {/* RIGHT MENU BAR */}
             <GameBar
+                //Required for board status and board id
                 userData = {userData}
                 boardStatus={boardStatus}
+                //checks if game is in check condition
                 checkCondition = {checkCondition}
+                //messages on the sidebar 
                 chat={chat}
+                //tells the color of user
                 myColor = {myColor}
+                //required for back to menu option in multiplayer offline
+                //and also when enters the multiplayer online game
                 setchat = {setchat}
+                //For all Coming soon features
+                //sends system notification of coming soon
                 ComingSoon={ComingSoon}
+                //Timer's time on side
                 time = {time}
+                //Sets the time on the sidebar timer
+                //required for updates
                 setTime={setTime}
+                //game status required for time increase 
+                //and menu options
                 GameStatus = {gameStatus}
+                //Sets the game status
+                //required for online game back to menu
+                //required for offline multiplayer end game option
                 setGameStatus = {setGameStatus}
+                //function to start multiplayer offline game
                 startMultiplayerGame = {startMultiplayerGame}
+                //REquired for menu options
                 isGameOver = {isGameOver}
+                //Required for menu options
                 gameMode = {gameMode}
+                //Required for menu options
                 setGameMode = {setGameMode}
+                //Required for sending system notification
                 sendSystemNotification={sendSystemNotification}
-                socket={socket}
-                sendSystemMessage={sendSystemMessage}
+                //Required to set data when waiting mode active
                 setopponentData = {setopponentData}
+                //Check if waiting for player
                 waitingForPlayer = {waitingForPlayer}
+                //sets waiting for player true or false
                 setWaitingForPlayer = {setWaitingForPlayer}
+                //Loading sign on join button
                 joinButtonLoading = {joinButtonLoading}
-                setJoinButtonLoading = {setJoinButtonLoading}
+                //Loading sign on create Button
                 createButtonLoading = {createButtonLoading}
-                setCreateButtonLoading = {setCreateButtonLoading}
+                //Join sign on leave game button
                 leaveGameButtonLoading = {leaveGameButtonLoading}
-                setLeaveGameButtonLoading = {setLeaveGameButtonLoading}
+                //Fucntion to make new online room
                 CreateNewRoom={CreateNewRoom}
+                //Delete online room
                 DeleteRoom={DeleteRoom}
+                //Join an online game room
                 JoinRoom = {JoinRoom}
-                joinRoomInput = {joinRoomInput}
-                setJoinRoomInput = {setJoinRoomInput}
+                // starts the online game
                 startGame = {startGame}
+                //Opponents data
                 opponentData = {opponentData}
+                //Start game button loading 
                 startGameButtonLoading = {false}
+                //Leave online game
                 leaveGame = {leaveGame}
             />
         </div>
