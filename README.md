@@ -2,6 +2,12 @@
  
 **Abstract**
 
+**Developers**
+**Parv Gupta**
+**Naman Malik**
+**Devansh Gupta**
+**Vaibhav Goyal**
+
 Wazir is an automated voice chessboard with self-moving chess pieces. The board lets you play an authentic and real-time chess game against anyone and allows you to enjoy a great chess game wherever you are, anytime. It connects you with someone on the other side of the planet or with a family member or a friend you haven't seen in a long time. The pieces move independently with the assistance of AI, as if they are charmed, much like in a fairy novel. Playing a hands-free chess game will astound everyone. It will maintain the features such as voice command, playing against human-like AI, learning from every game, and serving as the ultimate instrument of communication for people worldwide.
 
 The board has embedded Arduino mega and ESP modules connected to the Internet, allowing users to control the pieces through our web app. The user can play the game through our web application which is user-friendly and easy to navigate. The web app and the physical framework will be synced, making it easier to keep an apt track of the user's movements. Two stepper motors and timing belts move the electromagnet. Each component contains a loose steel ball bearing that allows them to glide around effortlessly.
@@ -73,7 +79,7 @@ The Client or the front-end part of the project is developed using JavaScript ba
 
 **3.1.3 Design & Implementation of hardware**
 
-Hardware for the project has two sides including technical and mechanical. The motors used for the development of H-Plotter were Nema Stepper Motors with the combination of belts,steel rods and ball bearings that ensures the smooth movement of electromagnet that is mounted over the plotter. The electomagnet, motors & display is ![Alt Text](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.001.png)controlled by the use of relays and Arduino Mega 2560 that communicated with ESP-8266 module by digital signals. 
+Hardware for the project has two sides including technical and mechanical. The motors used for the development of H-Plotter were Nema Stepper Motors with the combination of belts,steel rods and ball bearings that ensures the smooth movement of electromagnet that is mounted over the plotter. The electomagnet, motors & display is ![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.007.jpeg)controlled by the use of relays and Arduino Mega 2560 that communicated with ESP-8266 module by digital signals. 
 
 A custom circuit is used along with a combination of multiplexers, which are used to detect the pieces that are present physically over the board. 
 
