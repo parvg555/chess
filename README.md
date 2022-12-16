@@ -73,7 +73,7 @@ The Client or the front-end part of the project is developed using JavaScript ba
 
 **3.1.3 Design & Implementation of hardware**
 
-Hardware for the project has two sides including technical and mechanical. The motors used for the development of H-Plotter were Nema Stepper Motors with the combination of belts,steel rods and ball bearings that ensures the smooth movement of electromagnet that is mounted over the plotter. The electomagnet, motors & display is ![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.007.jpeg)controlled by the use of relays and Arduino Mega 2560 that communicated with ESP-8266 module by digital signals. 
+Hardware for the project has two sides including technical and mechanical. The motors used for the development of H-Plotter were Nema Stepper Motors with the combination of belts,steel rods and ball bearings that ensures the smooth movement of electromagnet that is mounted over the plotter. The electomagnet, motors & display is ![Alt Text](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.001.png)controlled by the use of relays and Arduino Mega 2560 that communicated with ESP-8266 module by digital signals. 
 
 A custom circuit is used along with a combination of multiplexers, which are used to detect the pieces that are present physically over the board. 
 
