@@ -3,10 +3,10 @@
 **Abstract**
 
 **Developers---------------**
-**Parv Gupta,**
-**Naman Malik,**
-**Devansh Gupta,**
-**Vaibhav Goyal**
+***Parv Gupta,***
+***Naman Malik,***
+***Devansh Gupta,***
+***Vaibhav Goyal***
 
 Wazir is an automated voice chessboard with self-moving chess pieces. The board lets you play an authentic and real-time chess game against anyone and allows you to enjoy a great chess game wherever you are, anytime. It connects you with someone on the other side of the planet or with a family member or a friend you haven't seen in a long time. The pieces move independently with the assistance of AI, as if they are charmed, much like in a fairy novel. Playing a hands-free chess game will astound everyone. It will maintain the features such as voice command, playing against human-like AI, learning from every game, and serving as the ultimate instrument of communication for people worldwide.
 
