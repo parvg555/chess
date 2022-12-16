@@ -94,7 +94,7 @@ The game of chess is a matter of two fundamental skills, positional evaluation a
 - Wazir promotes Make in India initiative, and helps to generate skilled employment. It also promotes chess culture in India.
 3. **Work breakdown structure**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.008.jpeg)
+![](/Readme Images/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.008.jpeg)
 
 4. **Tools & Technology**
 - **Arduino Mega 2560:** The Arduino Mega 2560 is a microcontroller board based on the ATmega2560. It has 54 digital input/output pins (of which 15 can be used as PWM outputs), 16 analog inputs, 4 UARTs (hardware serial ports), a 16 MHz crystal oscillator, a USB connection, a power jack, an ICSP header, and a reset button. It contains everything needed to support the microcontroller; simply connect it to a computer with a USB cable or power it with a AC-to-DC adapter or battery to get started. The Mega 2560 board is compatible with most shields designed for the Uno and the former boards Duemilanove or Diecimila.
