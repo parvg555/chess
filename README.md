@@ -81,11 +81,16 @@ The Client or the front-end part of the project is developed using JavaScript ba
 
 **3.1.3 Design & Implementation of hardware**
 
-Hardware for the project has two sides including technical and mechanical. The motors used for the development of H-Plotter were Nema Stepper Motors with the combination of belts,steel rods and ball bearings that ensures the smooth movement of electromagnet that is mounted over the plotter. The electomagnet, motors & display is ![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.007.jpeg)controlled by the use of relays and Arduino Mega 2560 that communicated with ESP-8266 module by digital signals. 
+Hardware for the project has two sides including technical and mechanical. The motors used for the development of H-Plotter were Nema Stepper Motors with the combination of belts,steel rods and ball bearings that ensures the smooth movement of electromagnet that is mounted over the plotter. The electomagnet, motors & display is controlled by the use of relays and Arduino Mega 2560 that communicated with ESP-8266 module by digital signals. 
+
+<p align="center">
+  <img src="/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.007.jpeg">
+</p>
 
 A custom circuit is used along with a combination of multiplexers, which are used to detect the pieces that are present physically over the board. 
 
 The RFID detection and electromagnetic sensing makes sure the algorithm is fed with the required data correctly, which further defines the position of the board at any moment to analyse the game. 
+
 
 **3.2 Proposed Solution**
 
@@ -102,7 +107,7 @@ The game of chess is a matter of two fundamental skills, positional evaluation a
 - Wazir promotes Make in India initiative, and helps to generate skilled employment. It also promotes chess culture in India.
 3. **Work breakdown structure**
 
-![](/Readme Images/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.008.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.008.jpeg)
 
 4. **Tools & Technology**
 - **Arduino Mega 2560:** The Arduino Mega 2560 is a microcontroller board based on the ATmega2560. It has 54 digital input/output pins (of which 15 can be used as PWM outputs), 16 analog inputs, 4 UARTs (hardware serial ports), a 16 MHz crystal oscillator, a USB connection, a power jack, an ICSP header, and a reset button. It contains everything needed to support the microcontroller; simply connect it to a computer with a USB cable or power it with a AC-to-DC adapter or battery to get started. The Mega 2560 board is compatible with most shields designed for the Uno and the former boards Duemilanove or Diecimila.
@@ -118,69 +123,69 @@ The game of chess is a matter of two fundamental skills, positional evaluation a
 1. **System architecture**
 1. **Use Case Diagram**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.009.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.009.jpeg)
 
 Use Case Diagram
 
 2. **Activity Diagram**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.010.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.010.jpeg)
 
 Activity Diagram
 
 3. **Sequence Diagram**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.011.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.011.jpeg)
 
 Sequence Diagram
 
 4. **State Chart Diagram**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.012.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.012.jpeg)
 
 State Chart Diagram
 
 2. **Design Model**
 1. **Class Design**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.013.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.013.jpeg)
 
 Class Design
 
 2. **ER Diagram**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.014.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.014.jpeg)
 
 ER Diagram
 
 3. **Data Flow Diagram**
 1. **Level 0**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.015.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.015.jpeg)
 
-FIGURE 4.2.3.1.1 Data Flow Diagram Level 0
+Data Flow Diagram Level 0
 
 2. **Level 1**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.016.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.016.jpeg)
 
 Data Flow Diagram Level 1
 
 3. **Level 2**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.017.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.017.jpeg)
 
 Data Flow Diagram Level 2 (For Chessboard Mode)
 
-FIGURE 4.2.3.3.2 Data Flow Diagram Level2 (For Chess Pieces Movement)![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.018.jpeg)
+Data Flow Diagram Level2 (For Chess Pieces Movement)![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.018.jpeg)
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.019.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.019.jpeg)
 
 Data Flow Diagram Level2 (For Plotter Data)
 
 3. **Gantt Chart**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.020.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.020.jpeg)
 
 Gantt Chart
 
@@ -188,23 +193,23 @@ Gantt Chart
 
 **4.4.1 Component Diagram**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.021.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.021.jpeg)
 
 Component Diagram
 
 5. **Hardware Design**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.022.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.022.jpeg)
 
 Hardware Design
 
 6. **Web-app Screenshots**
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.023.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.023.jpeg)
 
 Login Screen
 
-![](Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.024.jpeg)
+![](/readimg/Aspose.Words.bb321486-1594-4552-a469-4479c10af2dc.024.jpeg)
 
 Playing Screen
 
